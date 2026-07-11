@@ -5,21 +5,29 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Weekly Risala Report</title>
     <style>
-        body { font-family: Arial, sans-serif; background-color: #e0f2f1; margin: 0; padding: 20px; display: flex; justify-content: center; }
-        .form-container { background: white; width: 100%; max-width: 600px; padding: 25px; border-radius: 10px; box-shadow: 0px 5px 15px rgba(0, 128, 128, 0.3); border-top: 6px solid #008080; }
+        /* CSS VARIABLES (Yahan se color automatic badlenge) */
+        :root {
+            --primary: #008080;
+            --hover: #005959;
+            --bg: #e0f2f1;
+            --light-bg: #f0faf9;
+        }
+
+        body { font-family: Arial, sans-serif; background-color: var(--bg); margin: 0; padding: 20px; display: flex; justify-content: center; transition: background-color 0.5s ease; }
+        .form-container { background: white; width: 100%; max-width: 600px; padding: 25px; border-radius: 10px; box-shadow: 0px 5px 15px rgba(0,0,0,0.1); border-top: 6px solid var(--primary); }
         .header-image { width: 100%; height: auto; border-radius: 8px; margin-bottom: 15px; }
-        h2 { color: #008080; text-align: center; border-bottom: 2px solid #008080; padding-bottom: 5px; margin-bottom: 5px; }
-        .dynamic-subheading { text-align: center; color: #006666; font-size: 14px; font-weight: bold; margin-bottom: 20px; }
+        h2 { color: var(--primary); text-align: center; border-bottom: 2px solid var(--primary); padding-bottom: 5px; margin-bottom: 5px; }
+        .dynamic-subheading { text-align: center; color: var(--hover); font-size: 14px; font-weight: bold; margin-bottom: 20px; }
         label { font-weight: bold; display: block; margin-top: 15px; color: #333; }
         input, select { width: 100%; padding: 10px; margin-top: 5px; border: 1px solid #ccc; border-radius: 5px; box-sizing: border-box; font-size: 15px; }
-        input[readonly] { background-color: #e8f5f5; color: #008080; font-weight: bold; cursor: not-allowed; }
-        .description { font-size: 12px; color: #006666; margin-top: 5px; display: block; background: #f0faf9; padding: 8px; border-radius: 4px; border-left: 3px solid #008080; }
-        .btn-submit { background-color: #008080; color: white; padding: 14px; border: none; width: 100%; font-size: 16px; border-radius: 5px; margin-top: 25px; cursor: pointer; font-weight: bold; }
-        .btn-submit:hover { background-color: #005959; }
+        input[readonly] { background-color: var(--light-bg); color: var(--primary); font-weight: bold; cursor: not-allowed; }
+        .description { font-size: 12px; color: var(--hover); margin-top: 5px; display: block; background: var(--light-bg); padding: 8px; border-radius: 4px; border-left: 3px solid var(--primary); }
+        .btn-submit { background-color: var(--primary); color: white; padding: 14px; border: none; width: 100%; font-size: 16px; border-radius: 5px; margin-top: 25px; cursor: pointer; font-weight: bold; transition: background-color 0.3s ease; }
+        .btn-submit:hover { background-color: var(--hover); }
         .hidden { display: none !important; }
-        .message-box { text-align: center; padding: 30px 20px; font-size: 18px; color: #008080; line-height: 1.6; font-weight: bold; }
+        .message-box { text-align: center; padding: 30px 20px; font-size: 18px; color: var(--primary); line-height: 1.6; font-weight: bold; }
         .urdu-text { font-size: 24px; margin-top: 15px; display: block; }
-        #loadingOverlay { text-align: center; font-size: 18px; color: #008080; padding: 50px 0; font-weight: bold; }
+        #loadingOverlay { text-align: center; font-size: 18px; color: var(--primary); padding: 50px 0; font-weight: bold; }
     </style>
 </head>
 <body>
@@ -89,60 +97,7 @@
                 <select id="departmentList">
                     <option value="">-- Select --</option>
                     <option>12 Maah</option>
-                    <option>Al Madinatul Ilmiya</option>
-                    <option>Audit Department</option>
-                    <option>Construction Department</option>
-                    <option>Darul Ifta Ahle Sunnat</option>
-                    <option>Darul Madinah English School</option>
-                    <option>Darul Sunnah</option>
-                    <option>Donation Box</option>
-                    <option>Donation Cell</option>
-                    <option>Education Department</option>
-                    <option>Faizan Weekend Islamic Classes</option>
-                    <option>Faizane Madina</option>
-                    <option>FGN Channel</option>
-                    <option>Finance Department</option>
-                    <option>Gareeb Nawaz Online Academy</option>
-                    <option>Gharelu Sadqa Box</option>
-                    <option>GNRF (Plantation)</option>
-                    <option>Haftawar Ijtema O Madani Muzakara</option>
-                    <option>Hajj O Umrah</option>
-                    <option>HMO</option>
-                    <option>HR Department</option>
-                    <option>Imamat Course</option>
-                    <option>Imame Masajid</option>
-                    <option>Islahe Aamaal</option>
-                    <option>IT Department</option>
-                    <option>Jamiatul Madina Boys</option>
-                    <option>Jamiatul Madina Girls</option>
-                    <option>Kafan Dafan</option>
-                    <option>Khuddamul Masajid wal Madaris</option>
-                    <option>Madani Courses</option>
-                    <option>Madrasatul Madina Balighan</option>
-                    <option>Madrasatul Madina Boys</option>
-                    <option>Madrasatul Madina Girls</option>
-                    <option>Majlise Rabita</option>
-                    <option>Maktabatul Madina</option>
-                    <option>Media Department</option>
-                    <option>Model Jamia Tul Madina</option>
-                    <option>Mohabbate Badhao</option>
-                    <option>Muawanat Barae Islami Behne</option>
-                    <option>Property Department</option>
-                    <option>Purchase Department</option>
-                    <option>Qafila Department</option>
-                    <option>Rabita Barae Tajiran/ Khususi Tajiran</option>
-                    <option>Rabta Bil Ulama wal Mashaikh & Mazarate Auliya</option>
-                    <option>Reporting Desk - HMO</option>
-                    <option>Roohani Ilaj</option>
-                    <option>Schedule</option>
-                    <option>Sharai Rehnumai Desk</option>
-                    <option>Social Media</option>
-                    <option>Special Persons Department</option>
-                    <option>TAD</option>
-                    <option>Taqseeme Rasail</option>
-                    <option>Tibbi Ilaj</option>
-                    <option>Translation Department</option>
-                    <option>Ushr wa Atraf Gaon</option>
+                    <option>Al Madinatul Ilmiya</option><option>Audit Department</option><option>Construction Department</option><option>Darul Ifta Ahle Sunnat</option><option>Darul Madinah English School</option><option>Darul Sunnah</option><option>Donation Box</option><option>Donation Cell</option><option>Education Department</option><option>Faizan Weekend Islamic Classes</option><option>Faizane Madina</option><option>FGN Channel</option><option>Finance Department</option><option>Gareeb Nawaz Online Academy</option><option>Gharelu Sadqa Box</option><option>GNRF (Plantation)</option><option>Haftawar Ijtema O Madani Muzakara</option><option>Hajj O Umrah</option><option>HMO</option><option>HR Department</option><option>Imamat Course</option><option>Imame Masajid</option><option>Islahe Aamaal</option><option>IT Department</option><option>Jamiatul Madina Boys</option><option>Jamiatul Madina Girls</option><option>Kafan Dafan</option><option>Khuddamul Masajid wal Madaris</option><option>Madani Courses</option><option>Madrasatul Madina Balighan</option><option>Madrasatul Madina Boys</option><option>Madrasatul Madina Girls</option><option>Majlise Rabita</option><option>Maktabatul Madina</option><option>Media Department</option><option>Model Jamia Tul Madina</option><option>Mohabbate Badhao</option><option>Muawanat Barae Islami Behne</option><option>Property Department</option><option>Purchase Department</option><option>Qafila Department</option><option>Rabita Barae Tajiran/ Khususi Tajiran</option><option>Rabta Bil Ulama wal Mashaikh & Mazarate Auliya</option><option>Reporting Desk - HMO</option><option>Roohani Ilaj</option><option>Schedule</option><option>Sharai Rehnumai Desk</option><option>Social Media</option><option>Special Persons Department</option><option>TAD</option><option>Taqseeme Rasail</option><option>Tibbi Ilaj</option><option>Translation Department</option><option>Ushr wa Atraf Gaon</option>
                 </select>
             </div>
 
@@ -171,13 +126,36 @@
 <script>
     const scriptURL = "https://script.google.com/macros/s/AKfycbw4CJdIi24Hnywnn7txSnL6CZL2c9Zj9CVGm1HcaWE2skYMbjLNOk4uw2ORIjLJ28Qt/exec";
 
+    // THEME DICTIONARY (Yahan 10 themes set hain)
+    const themes = {
+        "Peacock": { primary: "#008080", hover: "#005959", bg: "#e0f2f1", lightBg: "#f0faf9" },
+        "Blue":    { primary: "#0056b3", hover: "#003d82", bg: "#e6f2ff", lightBg: "#f0f7ff" },
+        "Red":     { primary: "#dc3545", hover: "#a71d2a", bg: "#fcebec", lightBg: "#fdf3f4" },
+        "Green":   { primary: "#28a745", hover: "#1e7e34", bg: "#e8f5e9", lightBg: "#f1f8f1" },
+        "Orange":  { primary: "#fd7e14", hover: "#c6600d", bg: "#fff2e6", lightBg: "#fff8f0" },
+        "Purple":  { primary: "#6f42c1", hover: "#59339d", bg: "#f3e8ff", lightBg: "#f9f4ff" },
+        "Dark":    { primary: "#343a40", hover: "#23272b", bg: "#e9ecef", lightBg: "#f8f9fa" },
+        "Teal":    { primary: "#20c997", hover: "#17a2b8", bg: "#e0fafa", lightBg: "#f0fcfc" },
+        "Brown":   { primary: "#795548", hover: "#5d4037", bg: "#efebe9", lightBg: "#f5f3f1" },
+        "Pink":    { primary: "#e83e8c", hover: "#c23373", bg: "#fcecf3", lightBg: "#fdf4f7" }
+    };
+
+    function applyTheme(themeName) {
+        // Agar naam galat ho toh default 'Peacock' chalegi
+        let selected = themes[themeName] || themes["Peacock"];
+        document.documentElement.style.setProperty('--primary', selected.primary);
+        document.documentElement.style.setProperty('--hover', selected.hover);
+        document.documentElement.style.setProperty('--bg', selected.bg);
+        document.documentElement.style.setProperty('--light-bg', selected.lightBg);
+    }
+
     window.onload = function() {
         fetch(scriptURL + "?checkStatus=true")
         .then(response => response.json())
         .then(data => {
             document.getElementById("loadingOverlay").classList.add("hidden");
             
-            // DYNAMIC DETAILS SET KARNA
+            // 1. Set Image, Heading, Subheading
             if(data.thumbnail) {
                 document.getElementById("dynamicThumbnail").src = data.thumbnail;
                 document.getElementById("dynamicThumbnail").classList.remove("hidden");
@@ -185,7 +163,10 @@
             if(data.heading) document.getElementById("dynamicHeading").innerHTML = data.heading;
             if(data.subheading) document.getElementById("dynamicSubheading").innerHTML = data.subheading;
 
-            // ON/OFF CHECK KARNA
+            // 2. Set Theme
+            if(data.theme) applyTheme(data.theme);
+
+            // 3. Set ON/OFF Status
             if (data.status === "OFF") {
                 document.getElementById("linkOffMessage").classList.remove("hidden");
             } else {
@@ -205,34 +186,21 @@
         const pincodeDesc = document.getElementById("pincode-desc");
 
         if (chain === "central") {
-            allFields.classList.remove("hidden");
-            central.classList.remove("hidden");
-            dept.classList.add("hidden");
-            document.getElementById("nigranLevel").required = true;
-            document.getElementById("zimmedarLevel").required = false;
-            document.getElementById("departmentList").required = false;
+            allFields.classList.remove("hidden"); central.classList.remove("hidden"); dept.classList.add("hidden");
+            document.getElementById("nigranLevel").required = true; document.getElementById("zimmedarLevel").required = false; document.getElementById("departmentList").required = false;
             pincodeDesc.innerHTML = "Zaili/Alaqa/District Nigran Apne District Ka Pincode Add Kare, Division/State Nigran Apne Division/State Ke Kisi Ek District Ka Pincode Add Kare. Region Nigran Jis District Mein Inki Rehaish Hai Waha Ka Pincode Add Kare.";
         } else if (chain === "department") {
-            allFields.classList.remove("hidden");
-            central.classList.add("hidden");
-            dept.classList.remove("hidden");
-            document.getElementById("nigranLevel").required = false;
-            document.getElementById("zimmedarLevel").required = true;
-            document.getElementById("departmentList").required = true;
+            allFields.classList.remove("hidden"); central.classList.add("hidden"); dept.classList.remove("hidden");
+            document.getElementById("nigranLevel").required = false; document.getElementById("zimmedarLevel").required = true; document.getElementById("departmentList").required = true;
             pincodeDesc.innerHTML = "Department Ki Kisi Bhi Satah Ke Zimmedar Apne District Ka Pincode Add Kare Jaha Unki Zimmedari Hai Agar HOD/RHM Hai To Jis District Men unki Rehaish & Zimmedari Men Aata Hai Waha Ka Pincode Add Kare.";
         } else {
-            allFields.classList.add("hidden");
-            central.classList.add("hidden");
-            dept.classList.add("hidden");
+            allFields.classList.add("hidden"); central.classList.add("hidden"); dept.classList.add("hidden");
         }
     }
 
     function fetchDistrict() {
         let pincode = document.getElementById("pincode").value;
-        document.getElementById("district").value = "Searching...";
-        document.getElementById("division").value = "Searching...";
-        document.getElementById("state").value = "Searching...";
-        document.getElementById("region").value = "Searching...";
+        document.getElementById("district").value = "Searching..."; document.getElementById("division").value = "Searching..."; document.getElementById("state").value = "Searching..."; document.getElementById("region").value = "Searching...";
 
         fetch(scriptURL + "?pincode=" + pincode)
         .then(response => response.json())
@@ -243,38 +211,23 @@
             document.getElementById("region").value = data.region || "Not Found";
         })
         .catch(error => {
-            document.getElementById("district").value = "Error";
-            document.getElementById("division").value = "Error";
-            document.getElementById("state").value = "Error";
-            document.getElementById("region").value = "Error";
+            document.getElementById("district").value = "Error"; document.getElementById("division").value = "Error"; document.getElementById("state").value = "Error"; document.getElementById("region").value = "Error";
         });
     }
 
     function submitForm(event) {
         event.preventDefault(); 
         let submitBtn = document.getElementById("submitBtn");
-        submitBtn.innerHTML = "Wait, Submitting...";
-        submitBtn.disabled = true;
+        submitBtn.innerHTML = "Wait, Submitting..."; submitBtn.disabled = true;
 
         let formData = {
-            chainType: document.getElementById("chainType").value,
-            userName: document.getElementById("userName").value,
-            contactNumber: document.getElementById("contactNumber").value,
-            nigranLevel: document.getElementById("nigranLevel").value,
-            zimmedarLevel: document.getElementById("zimmedarLevel").value,
-            departmentList: document.getElementById("departmentList").value,
-            risalaReport: document.getElementById("risalaReport").value,
-            pincode: document.getElementById("pincode").value,
-            district: document.getElementById("district").value,
-            division: document.getElementById("division").value, 
-            state: document.getElementById("state").value,       
-            region: document.getElementById("region").value      
+            chainType: document.getElementById("chainType").value, userName: document.getElementById("userName").value, contactNumber: document.getElementById("contactNumber").value,
+            nigranLevel: document.getElementById("nigranLevel").value, zimmedarLevel: document.getElementById("zimmedarLevel").value, departmentList: document.getElementById("departmentList").value,
+            risalaReport: document.getElementById("risalaReport").value, pincode: document.getElementById("pincode").value,
+            district: document.getElementById("district").value, division: document.getElementById("division").value, state: document.getElementById("state").value, region: document.getElementById("region").value      
         };
 
-        fetch(scriptURL, {
-            method: "POST",
-            body: JSON.stringify(formData)
-        })
+        fetch(scriptURL, { method: "POST", body: JSON.stringify(formData) })
         .then(response => response.json())
         .then(data => {
             document.getElementById("dataForm").classList.add("hidden");
@@ -282,8 +235,7 @@
         })
         .catch(error => {
             alert("Error submitting form.");
-            submitBtn.innerHTML = "Submit Report";
-            submitBtn.disabled = false;
+            submitBtn.innerHTML = "Submit Report"; submitBtn.disabled = false;
         });
     }
 </script>

@@ -102,23 +102,19 @@
 <body>
 
 <div class="form-container" id="mainWrapper">
-    <!-- Thumbnail Image -->
     <img src="https://via.placeholder.com/600x150/008080/FFFFFF?text=Weekly+Risala+Report+Thumbnail" alt="Thumbnail" class="header-image">
     
     <h2>Weekly Risala Report</h2>
 
-    <!-- MESSAGE JAB LINK OFF HO -->
     <div id="linkOffMessage" class="hidden message-box">
         Aap Ne Deri Kardi Hai Link Off Ho Chuki hai.<br> Khair Koi Baat Nahi Aap Ab Niyyat Farmalijiye Keh Next Time On Time Risala Padh Kar Link Men Report Submit Kardiya Kare.
     </div>
 
-    <!-- MESSAGE JAB DATA SUBMIT HO JAYE -->
     <div id="successMessage" class="hidden message-box">
         Allah Kareem Aap Ko Murshid Ki Dua Ka Faizan Nasib Farmaye Aameen.<br>
         <span class="urdu-text">جَزَاک اللہ خَیْرًا</span>
     </div>
 
-    <!-- MAIN FORM -->
     <form id="dataForm" onsubmit="return submitForm(event)">
         
         <label>Chain Select Karein:</label>
@@ -128,18 +124,14 @@
             <option value="department">Department Chain</option>
         </select>
 
-        <!-- ALL FIELDS WRAPPER (Hidden initially) -->
         <div id="all-fields" class="hidden">
             
-            <!-- 1. NAME -->
             <label>Name:</label>
             <input type="text" id="userName" oninput="this.value = this.value.replace(/[^A-Za-z\s]/g, '')" required>
 
-            <!-- 2. CONTACT NUMBER -->
             <label>Contact Number:</label>
             <input type="text" id="contactNumber" maxlength="10" minlength="10" oninput="this.value = this.value.replace(/[^0-9]/g, '').replace(/^0+/, '')" required>
 
-            <!-- 3. DYNAMIC FIELDS (Central or Department) -->
             <div id="central-fields" class="hidden">
                 <label>Nigran Level:</label>
                 <select id="nigranLevel">
@@ -230,20 +222,26 @@
                 </select>
             </div>
 
-            <!-- 4. RISALA REPORT -->
             <label>Risala Report:</label>
             <input type="text" id="risalaReport" maxlength="5" oninput="this.value = this.value.replace(/[^0-9]/g, '').replace(/^0+/, '')" required>
             <span class="description">Aap ki & Aap Ki Koshish Se Is Hafte Kitno Ne Risala Padha Suna.</span>
 
-            <!-- 5. PINCODE -->
             <label>Pincode Number:</label>
             <input type="text" id="pincode" maxlength="6" minlength="6" oninput="this.value = this.value.replace(/[^0-9]/g, '').replace(/^0+/, ''); if(this.value.length === 6) fetchDistrict();" required>
-            <!-- Yeh line ab automatically badlegi -->
             <span class="description" id="pincode-desc"></span>
 
-            <!-- 6. DISTRICT NAME -->
             <label>District Name:</label>
             <input type="text" id="district" readonly placeholder="Pincode daalne par auto-fill hoga" required>
+            
+            <!-- NAYI FIELDS YAHAN HAIN -->
+            <label>Division Name:</label>
+            <input type="text" id="division" readonly placeholder="Pincode daalne par auto-fill hoga" required>
+            
+            <label>State Name:</label>
+            <input type="text" id="state" readonly placeholder="Pincode daalne par auto-fill hoga" required>
+            
+            <label>Region Name:</label>
+            <input type="text" id="region" readonly placeholder="Pincode daalne par auto-fill hoga" required>
             
         </div>
 
@@ -253,9 +251,10 @@
 
 <script>
     // ==========================================
-    // LINK ON / OFF SWITCH
-    // Jab form band karna ho, isko "false" kar dein.
+    // YAHAN APNA APP SCRIPT URL DAALEIN
+    const scriptURL = "YAHAN_APNA_APP_SCRIPT_URL_PASTE_KAREIN";
     // ==========================================
+
     const isLinkActive = true; 
 
     window.onload = function() {
@@ -270,7 +269,7 @@
         const allFields = document.getElementById("all-fields");
         const central = document.getElementById("central-fields");
         const dept = document.getElementById("department-fields");
-        const pincodeDesc = document.getElementById("pincode-desc"); // Pincode line sensor
+        const pincodeDesc = document.getElementById("pincode-desc");
 
         if (chain === "central") {
             allFields.classList.remove("hidden");
@@ -281,7 +280,6 @@
             document.getElementById("zimmedarLevel").required = false;
             document.getElementById("departmentList").required = false;
             
-            // Central Chain wali line
             pincodeDesc.innerHTML = "Zaili/Alaqa/District Nigran Apne District Ka Pincode Add Kare, Division/State Nigran Apne Division/State Ke Kisi Ek District Ka Pincode Add Kare. Region Nigran Jis District Mein Inki Rehaish Hai Waha Ka Pincode Add Kare.";
             
         } else if (chain === "department") {
@@ -293,7 +291,6 @@
             document.getElementById("zimmedarLevel").required = true;
             document.getElementById("departmentList").required = true;
             
-            // Department Chain wali line
             pincodeDesc.innerHTML = "Department Ki Kisi Bhi Satah Ke Zimmedar Apne District Ka Pincode Add Kare Jaha Unki Zimmedari Hai Agar HOD/RHM Hai To Jis District Men unki Rehaish & Zimmedari Men Aata Hai Waha Ka Pincode Add Kare.";
             
         } else {
@@ -303,28 +300,67 @@
         }
     }
 
+    // NAYA AUTO-FILL FUNCTION
     function fetchDistrict() {
         let pincode = document.getElementById("pincode").value;
-        let districtField = document.getElementById("district");
         
-        districtField.value = "Fetching data...";
+        document.getElementById("district").value = "Searching...";
+        document.getElementById("division").value = "Searching...";
+        document.getElementById("state").value = "Searching...";
+        document.getElementById("region").value = "Searching...";
 
-        setTimeout(() => {
-            if(pincode === "422001") {
-                districtField.value = "Nashik";
-            } else if(pincode === "400001") {
-                districtField.value = "Mumbai";
-            } else {
-                districtField.value = "District Found"; 
-            }
-        }, 1000);
+        fetch(scriptURL + "?pincode=" + pincode)
+        .then(response => response.json())
+        .then(data => {
+            document.getElementById("district").value = data.district || "Not Found";
+            document.getElementById("division").value = data.division || "Not Found";
+            document.getElementById("state").value = data.state || "Not Found";
+            document.getElementById("region").value = data.region || "Not Found";
+        })
+        .catch(error => {
+            document.getElementById("district").value = "Error fetching data";
+            document.getElementById("division").value = "Error fetching data";
+            document.getElementById("state").value = "Error fetching data";
+            document.getElementById("region").value = "Error fetching data";
+        });
     }
 
     function submitForm(event) {
         event.preventDefault(); 
         
-        document.getElementById("dataForm").classList.add("hidden");
-        document.getElementById("successMessage").classList.remove("hidden");
+        let submitBtn = document.getElementById("submitBtn");
+        submitBtn.innerHTML = "Wait, Submitting...";
+        submitBtn.disabled = true;
+
+        let formData = {
+            chainType: document.getElementById("chainType").value,
+            userName: document.getElementById("userName").value,
+            contactNumber: document.getElementById("contactNumber").value,
+            nigranLevel: document.getElementById("nigranLevel").value,
+            zimmedarLevel: document.getElementById("zimmedarLevel").value,
+            departmentList: document.getElementById("departmentList").value,
+            risalaReport: document.getElementById("risalaReport").value,
+            pincode: document.getElementById("pincode").value,
+            district: document.getElementById("district").value,
+            division: document.getElementById("division").value, // Naya bheja
+            state: document.getElementById("state").value,       // Naya bheja
+            region: document.getElementById("region").value      // Naya bheja
+        };
+
+        fetch(scriptURL, {
+            method: "POST",
+            body: JSON.stringify(formData)
+        })
+        .then(response => response.json())
+        .then(data => {
+            document.getElementById("dataForm").classList.add("hidden");
+            document.getElementById("successMessage").classList.remove("hidden");
+        })
+        .catch(error => {
+            alert("Kuch error aagaya, network check karein.");
+            submitBtn.innerHTML = "Submit Report";
+            submitBtn.disabled = false;
+        });
     }
 </script>
 

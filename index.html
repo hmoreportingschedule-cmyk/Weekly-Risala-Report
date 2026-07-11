@@ -8,7 +8,7 @@
         :root { --primary: #008080; --hover: #005959; --bg: #e0f2f1; --light-bg: #f0faf9; }
         body { font-family: Arial, sans-serif; background-color: var(--bg); margin: 0; padding: 20px; display: flex; justify-content: center; }
         .form-container { background: white; width: 100%; max-width: 600px; padding: 25px; border-radius: 10px; box-shadow: 0px 5px 15px rgba(0,0,0,0.1); border-top: 6px solid var(--primary); }
-        .header-image { width: 100%; height: auto; border-radius: 8px; margin-bottom: 15px; display: block; }
+        .header-image { width: 100%; height: auto; border-radius: 8px; margin-bottom: 15px; display: none; }
         h2 { color: var(--primary); text-align: center; border-bottom: 2px solid var(--primary); padding-bottom: 5px; margin-bottom: 5px; }
         .dynamic-subheading { text-align: center; color: var(--hover); font-size: 17px; font-weight: bold; margin-bottom: 20px; }
         label { font-weight: bold; display: block; margin-top: 15px; color: #333; }
@@ -21,7 +21,7 @@
 </head>
 <body>
 <div class="form-container" id="mainWrapper">
-    <img id="dynamicThumbnail" src="" alt="Thumbnail" class="header-image hidden">
+    <img id="dynamicThumbnail" src="" alt="Thumbnail" class="header-image">
     <h2 id="dynamicHeading">Loading...</h2>
     <div id="dynamicSubheading" class="dynamic-subheading"></div>
     <div id="loadingOverlay">Checking Form Status...</div>
@@ -59,12 +59,27 @@
 </div>
 <script>
     const scriptURL = "https://script.google.com/macros/s/AKfycbw4CJdIi24Hnywnn7txSnL6CZL2c9Zj9CVGm1HcaWE2skYMbjLNOk4uw2ORIjLJ28Qt/exec";
-    const themes = { "Peacock": { primary: "#008080", hover: "#005959", bg: "#e0f2f1", lightBg: "#f0faf9" }, "Blue": { primary: "#0056b3", hover: "#003d82", bg: "#e6f2ff", lightBg: "#f0f7ff" }, "Red": { primary: "#dc3545", hover: "#a71d2a", bg: "#fcebec", lightBg: "#fdf3f4" } };
+    const themes = {
+        "Peacock": { primary: "#008080", hover: "#005959", bg: "#e0f2f1", lightBg: "#f0faf9" },
+        "Blue":    { primary: "#0056b3", hover: "#003d82", bg: "#e6f2ff", lightBg: "#f0f7ff" },
+        "Red":     { primary: "#dc3545", hover: "#a71d2a", bg: "#fcebec", lightBg: "#fdf3f4" },
+        "Green":   { primary: "#28a745", hover: "#1e7e34", bg: "#e8f5e9", lightBg: "#f1f8f1" },
+        "Orange":  { primary: "#fd7e14", hover: "#c6600d", bg: "#fff2e6", lightBg: "#fff8f0" },
+        "Purple":  { primary: "#6f42c1", hover: "#59339d", bg: "#f3e8ff", lightBg: "#f9f4ff" },
+        "Dark":    { primary: "#343a40", hover: "#23272b", bg: "#e9ecef", lightBg: "#f8f9fa" },
+        "Teal":    { primary: "#20c997", hover: "#17a2b8", bg: "#e0fafa", lightBg: "#f0fcfc" },
+        "Brown":   { primary: "#795548", hover: "#5d4037", bg: "#efebe9", lightBg: "#f5f3f1" },
+        "Pink":    { primary: "#e83e8c", hover: "#c23373", bg: "#fcecf3", lightBg: "#fdf4f7" }
+    };
     function applyTheme(t) { let s = themes[t] || themes["Peacock"]; document.documentElement.style.setProperty('--primary', s.primary); document.documentElement.style.setProperty('--hover', s.hover); document.documentElement.style.setProperty('--bg', s.bg); document.documentElement.style.setProperty('--light-bg', s.lightBg); }
     window.onload = function() {
         fetch(scriptURL + "?checkStatus=true").then(r => r.json()).then(data => {
             document.getElementById("loadingOverlay").classList.add("hidden");
-            if(data.thumbnail) { let img = document.getElementById("dynamicThumbnail"); img.src = data.thumbnail; img.classList.remove("hidden"); }
+            if(data.thumbnail) { 
+                let img = document.getElementById("dynamicThumbnail");
+                let fId = data.thumbnail.split('/d/')[1]?.split('/')[0];
+                if(fId) { img.src = "https://lh3.googleusercontent.com/d/" + fId; img.style.display = "block"; }
+            }
             document.getElementById("dynamicHeading").innerHTML = data.heading;
             document.getElementById("dynamicSubheading").innerHTML = data.subheading;
             applyTheme(data.theme);

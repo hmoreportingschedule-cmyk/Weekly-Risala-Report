@@ -10,13 +10,18 @@
         .form-container { background: white; width: 100%; max-width: 600px; padding: 25px; border-radius: 10px; box-shadow: 0px 5px 15px rgba(0,0,0,0.1); border-top: 6px solid var(--primary); }
         .header-image { width: 100%; height: auto; border-radius: 8px; margin-bottom: 15px; display: none; }
         h2 { color: var(--primary); text-align: center; border-bottom: 2px solid var(--primary); padding-bottom: 5px; margin-bottom: 5px; }
-        .dynamic-subheading { text-align: center; color: var(--hover); font-size: 17px; font-weight: bold; margin-bottom: 20px; }
+        
+        /* Updated dynamic-subheading CSS */
+        .dynamic-subheading { text-align: center; color: white; background-color: var(--primary); padding: 10px; border-radius: 5px; font-size: 20px; font-weight: bold; margin-bottom: 20px; }
+        
         label { font-weight: bold; display: block; margin-top: 15px; color: #333; }
         input, select { width: 100%; padding: 10px; margin-top: 5px; border: 1px solid #ccc; border-radius: 5px; box-sizing: border-box; font-size: 15px; }
         input[readonly] { background-color: var(--light-bg); color: var(--primary); font-weight: bold; }
         .btn-submit { background-color: var(--primary); color: white; padding: 14px; border: none; width: 100%; font-size: 16px; border-radius: 5px; margin-top: 25px; cursor: pointer; font-weight: bold; }
         .hidden { display: none !important; }
-        .message-box { text-align: center; padding: 30px 20px; font-size: 18px; color: var(--primary); font-weight: bold; }
+        
+        /* Updated message-box CSS for Theme Color Box */
+        .message-box { text-align: center; padding: 20px; font-size: 18px; background-color: var(--primary); color: white; font-weight: bold; border-radius: 8px; margin-bottom: 15px; }
     </style>
 </head>
 <body>
@@ -28,7 +33,8 @@
     
     <!-- Link Off and Success Messages -->
     <div id="linkOffMessage" class="hidden message-box">Aap Ne Deri Kardi Hai Link Off Ho Chuki Hai Khair Koi Baat Nahi, Niyyat Farmalijiye Keh Next Time On Time Risala Padh Kar Link Men Report Submit Karege.</div>
-    <div id="successMessage" class="hidden message-box">Allah Kareem Aap Ko Murshid Ki Dua Ka Faizan Nasib Farmaye<br><br>Aameen. جَزَاک اللہ خَیْرًا</div>
+    <!-- Removed double line gap in success message -->
+    <div id="successMessage" class="hidden message-box">Allah Kareem Aap Ko Murshid Ki Dua Ka Faizan Nasib Farmaye<br>Aameen. جَزَاک اللہ خَیْرًا</div>
     
     <form id="dataForm" class="hidden" onsubmit="return submitForm(event)">
         <label>Chain Select Karein:</label>
@@ -59,21 +65,21 @@
                 <select id="departmentList"><option value="">-- Select --</option><option>12 Maah</option><option>Al Madinatul Ilmiya</option><option>Audit Department</option><option>Construction Department</option><option>Darul Ifta Ahle Sunnat</option><option>Darul Madinah English School</option><option>Darul Sunnah</option><option>Donation Box</option><option>Donation Cell</option><option>Education Department</option><option>Faizan Weekend Islamic Classes</option><option>Faizane Madina</option><option>FGN Channel</option><option>Finance Department</option><option>Gareeb Nawaz Online Academy</option><option>Gharelu Sadqa Box</option><option>GNRF (Plantation)</option><option>Haftawar Ijtema O Madani Muzakara</option><option>Hajj O Umrah</option><option>HMO</option><option>HR Department</option><option>Imamat Course</option><option>Imame Masajid</option><option>Islahe Aamaal</option><option>IT Department</option><option>Jamiatul Madina Boys</option><option>Jamiatul Madina Girls</option><option>Kafan Dafan</option><option>Khuddamul Masajid wal Madaris</option><option>Madani Courses</option><option>Madrasatul Madina Balighan</option><option>Madrasatul Madina Boys</option><option>Madrasatul Madina Girls</option><option>Majlise Rabita</option><option>Maktabatul Madina</option><option>Media Department</option><option>Model Jamia Tul Madina</option><option>Mohabbate Badhao</option><option>Muawanat Barae Islami Behne</option><option>Property Department</option><option>Purchase Department</option><option>Qafila Department</option><option>Rabita Barae Tajiran/ Khususi Tajiran</option><option>Rabta Bil Ulama wal Mashaikh & Mazarate Auliya</option><option>Reporting Desk - HMO</option><option>Roohani Ilaj</option><option>Schedule</option><option>Sharai Rehnumai Desk</option><option>Social Media</option><option>Special Persons Department</option><option>TAD</option><option>Taqseeme Rasail</option><option>Tibbi Ilaj</option><option>Translation Department</option><option>Ushr wa Atraf Gaon</option></select>
             </div>
             
-            <!-- Risala Report Field Updated -->
+            <!-- Risala Report Field -->
             <label>Risala Report:</label> 
             <input type="text" id="risalaReport" maxlength="5" pattern="[1-9][0-9]{0,4}" oninput="this.value = this.value.replace(/[^0-9]/g, ''); if(this.value.startsWith('0')) this.value = this.value.substring(1);" title="Maximum 5 digits, 0 se shuru nahi ho sakta" required>
             <div style="font-size: 12px; color: #555; margin-top: 5px; margin-bottom: 5px; line-height: 1.4;">
                 Aap ki & Aap Ki Koshish Se Is Hafte Kitno Ne Risala Padha Suna.
             </div>
             
-            <!-- Pincode Field -->
+            <!-- Pincode Field Updated to clear validity oninput -->
             <label>Pincode:</label> 
-            <input type="text" id="pincode" minlength="6" maxlength="6" pattern="[1-9][0-9]{5}" oninput="this.value = this.value.replace(/[^0-9]/g, ''); if(this.value.startsWith('0')) this.value = this.value.substring(1); if(this.value.length === 6) fetchDistrict();" title="6 digit ka Pincode darj karein jo 0 se shuru na ho" required>
+            <input type="text" id="pincode" minlength="6" maxlength="6" pattern="[1-9][0-9]{5}" oninput="this.setCustomValidity(''); this.value = this.value.replace(/[^0-9]/g, ''); if(this.value.startsWith('0')) this.value = this.value.substring(1); if(this.value.length === 6) fetchDistrict();" title="6 digit ka Pincode darj karein jo 0 se shuru na ho" required>
             <div style="font-size: 12px; color: #555; margin-top: 5px; margin-bottom: 5px; line-height: 1.4;">
                 Jis Zimmedar Ki Jis District Men Zimmedari Hai Woh Disrict Ka Pincode Add Kare, HOD/RHM/Office Zimmedar Inki Rehaish Jis District Men Usi Ka Pincode Add Kare.
             </div>
             
-            <label>District:</label> <input type="text" id="district" readonly>
+            <label>District:</label> <input type="text" id="district" readonly required>
             <label>Division:</label> <input type="text" id="division" readonly>
             <label>State:</label> <input type="text" id="state" readonly>
             <label>Region:</label> <input type="text" id="region" readonly>
@@ -112,7 +118,25 @@
         });
     };
     function showChainFields() { const c = document.getElementById("chainType").value; document.getElementById("all-fields").classList.remove("hidden"); document.getElementById("central-fields").classList.toggle("hidden", c !== "central"); document.getElementById("department-fields").classList.toggle("hidden", c !== "department"); }
-    function fetchDistrict() { fetch(scriptURL + "?pincode=" + document.getElementById("pincode").value).then(r => r.json()).then(d => { document.getElementById("district").value = d.district; document.getElementById("division").value = d.division; document.getElementById("state").value = d.state; document.getElementById("region").value = d.region; }); }
+    
+    // Updated Pincode Logic to prevent unknown submission
+    function fetchDistrict() { 
+        let pInput = document.getElementById("pincode");
+        fetch(scriptURL + "?pincode=" + pInput.value).then(r => r.json()).then(d => { 
+            document.getElementById("district").value = d.district; 
+            document.getElementById("division").value = d.division; 
+            document.getElementById("state").value = d.state; 
+            document.getElementById("region").value = d.region; 
+            
+            if (d.district === "Not Found" || d.district === "") {
+                pInput.setCustomValidity("Yeh Pincode record mein nahi hai. Kripya sahi Pincode add karein.");
+                pInput.reportValidity();
+            } else {
+                pInput.setCustomValidity("");
+            }
+        }); 
+    }
+    
     function submitForm(e) { e.preventDefault(); fetch(scriptURL, { method: "POST", body: JSON.stringify({ chainType: document.getElementById("chainType").value, userName: document.getElementById("userName").value, contactNumber: document.getElementById("contactNumber").value, nigranLevel: document.getElementById("nigranLevel").value, zimmedarLevel: document.getElementById("zimmedarLevel").value, departmentList: document.getElementById("departmentList").value, risalaReport: document.getElementById("risalaReport").value, pincode: document.getElementById("pincode").value, district: document.getElementById("district").value, division: document.getElementById("division").value, state: document.getElementById("state").value, region: document.getElementById("region").value }) }).then(r => r.json()).then(d => { document.getElementById("dataForm").classList.add("hidden"); document.getElementById("successMessage").classList.remove("hidden"); }); }
 </script>
 </body>

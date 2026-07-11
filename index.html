@@ -21,7 +21,7 @@
 </head>
 <body>
 <div class="form-container" id="mainWrapper">
-    <img id="dynamicThumbnail" src="" alt="Thumbnail" class="header-image hidden" onerror="this.style.display='none'">
+    <img id="dynamicThumbnail" src="" alt="Thumbnail" class="header-image hidden">
     <h2 id="dynamicHeading">Loading...</h2>
     <div id="dynamicSubheading" class="dynamic-subheading"></div>
     <div id="loadingOverlay">Checking Form Status...</div>
@@ -45,7 +45,7 @@
                 <label>Zimmedar Level:</label> 
                 <select id="zimmedarLevel"><option value="">-- Select --</option><option>City/Alaqa</option><option>District/City/Circle</option><option>Division</option><option>Gaon/Zaili Halqa</option><option>Hind Satah (HOD)/Muawwin HOD</option><option>Moallim/Imaam/Moazzin</option><option>Office/Assistant Zimmedar</option><option>Region</option><option>Rukne Hind Mushawarat</option><option>State</option></select>
                 <label>Department:</label> 
-                <select id="departmentList"><option value="">-- Select --</option><option>12 Maah</option><option>Al Madinatul Ilmiya</option><option>IT Department</option><option>Education Department</option><option>Faizan Weekend Islamic Classes</option><option>Faizane Madina</option><option>Haftawar Ijtema O Madani Muzakara</option><option>HR Department</option><option>Madani Courses</option><option>Majlise Rabita</option><option>Maktabatul Madina</option><option>Media Department</option><option>Property Department</option><option>Qafila Department</option><option>Roohani Ilaj</option><option>Social Media</option><option>TAD</option><option>Taqseeme Rasail</option><option>Tibbi Ilaj</option><option>Translation Department</option></select>
+                <select id="departmentList"><option value="">-- Select --</option><option>12 Maah</option><option>Al Madinatul Ilmiya</option><option>Audit Department</option><option>Construction Department</option><option>Darul Ifta Ahle Sunnat</option><option>Darul Madinah English School</option><option>Darul Sunnah</option><option>Donation Box</option><option>Donation Cell</option><option>Education Department</option><option>Faizan Weekend Islamic Classes</option><option>Faizane Madina</option><option>FGN Channel</option><option>Finance Department</option><option>Gareeb Nawaz Online Academy</option><option>Gharelu Sadqa Box</option><option>GNRF (Plantation)</option><option>Haftawar Ijtema O Madani Muzakara</option><option>Hajj O Umrah</option><option>HMO</option><option>HR Department</option><option>Imamat Course</option><option>Imame Masajid</option><option>Islahe Aamaal</option><option>IT Department</option><option>Jamiatul Madina Boys</option><option>Jamiatul Madina Girls</option><option>Kafan Dafan</option><option>Khuddamul Masajid wal Madaris</option><option>Madani Courses</option><option>Madrasatul Madina Balighan</option><option>Madrasatul Madina Boys</option><option>Madrasatul Madina Girls</option><option>Majlise Rabita</option><option>Maktabatul Madina</option><option>Media Department</option><option>Model Jamia Tul Madina</option><option>Mohabbate Badhao</option><option>Muawanat Barae Islami Behne</option><option>Property Department</option><option>Purchase Department</option><option>Qafila Department</option><option>Rabita Barae Tajiran/ Khususi Tajiran</option><option>Rabta Bil Ulama wal Mashaikh & Mazarate Auliya</option><option>Reporting Desk - HMO</option><option>Roohani Ilaj</option><option>Schedule</option><option>Sharai Rehnumai Desk</option><option>Social Media</option><option>Special Persons Department</option><option>TAD</option><option>Taqseeme Rasail</option><option>Tibbi Ilaj</option><option>Translation Department</option><option>Ushr wa Atraf Gaon</option></select>
             </div>
             <label>Risala Report:</label> <input type="text" id="risalaReport" required>
             <label>Pincode:</label> <input type="text" id="pincode" maxlength="6" oninput="if(this.value.length === 6) fetchDistrict();" required>
@@ -64,13 +64,7 @@
     window.onload = function() {
         fetch(scriptURL + "?checkStatus=true").then(r => r.json()).then(data => {
             document.getElementById("loadingOverlay").classList.add("hidden");
-            if(data.thumbnail) { 
-                let img = document.getElementById("dynamicThumbnail");
-                // Google Drive link ko direct image format mein convert karne ka logic
-                let driveId = data.thumbnail.split('/d/')[1] ? data.thumbnail.split('/d/')[1].split('/')[0] : "";
-                img.src = driveId ? "https://lh3.googleusercontent.com/d/" + driveId : data.thumbnail;
-                img.classList.remove("hidden"); 
-            }
+            if(data.thumbnail) { let img = document.getElementById("dynamicThumbnail"); img.src = data.thumbnail; img.classList.remove("hidden"); }
             document.getElementById("dynamicHeading").innerHTML = data.heading;
             document.getElementById("dynamicSubheading").innerHTML = data.subheading;
             applyTheme(data.theme);

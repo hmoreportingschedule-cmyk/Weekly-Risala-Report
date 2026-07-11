@@ -238,7 +238,8 @@
             <!-- 5. PINCODE -->
             <label>Pincode Number:</label>
             <input type="text" id="pincode" maxlength="6" minlength="6" oninput="this.value = this.value.replace(/[^0-9]/g, '').replace(/^0+/, ''); if(this.value.length === 6) fetchDistrict();" required>
-            <span class="description">Zaili/Alaqa/District Nigran Apne District Ka Pincode Add Kare, Division/State Nigran Apne Division/State Ke Kisi Ek District Ka Pincode Add Kare. Region Nigran Jis District Mein Inki Rehaish Hai Waha Ka Pincode Add Kare.</span>
+            <!-- Yeh line ab automatically badlegi -->
+            <span class="description" id="pincode-desc"></span>
 
             <!-- 6. DISTRICT NAME -->
             <label>District Name:</label>
@@ -269,6 +270,7 @@
         const allFields = document.getElementById("all-fields");
         const central = document.getElementById("central-fields");
         const dept = document.getElementById("department-fields");
+        const pincodeDesc = document.getElementById("pincode-desc"); // Pincode line sensor
 
         if (chain === "central") {
             allFields.classList.remove("hidden");
@@ -278,6 +280,10 @@
             document.getElementById("nigranLevel").required = true;
             document.getElementById("zimmedarLevel").required = false;
             document.getElementById("departmentList").required = false;
+            
+            // Central Chain wali line
+            pincodeDesc.innerHTML = "Zaili/Alaqa/District Nigran Apne District Ka Pincode Add Kare, Division/State Nigran Apne Division/State Ke Kisi Ek District Ka Pincode Add Kare. Region Nigran Jis District Mein Inki Rehaish Hai Waha Ka Pincode Add Kare.";
+            
         } else if (chain === "department") {
             allFields.classList.remove("hidden");
             central.classList.add("hidden");
@@ -286,6 +292,10 @@
             document.getElementById("nigranLevel").required = false;
             document.getElementById("zimmedarLevel").required = true;
             document.getElementById("departmentList").required = true;
+            
+            // Department Chain wali line
+            pincodeDesc.innerHTML = "Department Ki Kisi Bhi Satah Ke Zimmedar Apne District Ka Pincode Add Kare Jaha Unki Zimmedari Hai Agar HOD/RHM Hai To Jis District Men unki Rehaish & Zimmedari Men Aata Hai Waha Ka Pincode Add Kare.";
+            
         } else {
             allFields.classList.add("hidden");
             central.classList.add("hidden");

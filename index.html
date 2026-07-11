@@ -56,7 +56,7 @@
     </form>
 </div>
 <script>
-    const scriptURL = "YAHAN_APNA_PURANA_SCRIPT_URL_DAALEIN"; // <--- ZAROORI: Apna purana link wapas yahan paste karein
+    const scriptURL = "https://script.google.com/macros/s/AKfycbw4CJdIi24Hnywnn7txSnL6CZL2c9Zj9CVGm1HcaWE2skYMbjLNOk4uw2ORIjLJ28Qt/exec";
     const themes = {
         "Peacock": { primary: "#008080", hover: "#005959", bg: "#e0f2f1", lightBg: "#f0faf9" },
         "Blue": { primary: "#0056b3", hover: "#003d82", bg: "#e6f2ff", lightBg: "#f0f7ff" },
@@ -80,7 +80,22 @@
             else document.getElementById("dataForm").classList.remove("hidden");
         });
     };
-    // Baaki functions (fetchDistrict, submitForm) yahan waise hi rahengi...
+    function showChainFields() {
+        const c = document.getElementById("chainType").value;
+        document.getElementById("all-fields").classList.remove("hidden");
+        document.getElementById("central-fields").classList.toggle("hidden", c !== "central");
+        document.getElementById("department-fields").classList.toggle("hidden", c !== "department");
+    }
+    function fetchDistrict() {
+        fetch(scriptURL + "?pincode=" + document.getElementById("pincode").value).then(r => r.json()).then(d => {
+            document.getElementById("district").value = d.district; document.getElementById("division").value = d.division;
+            document.getElementById("state").value = d.state; document.getElementById("region").value = d.region;
+        });
+    }
+    function submitForm(e) {
+        e.preventDefault();
+        fetch(scriptURL, { method: "POST", body: JSON.stringify({ chainType: document.getElementById("chainType").value, userName: document.getElementById("userName").value, contactNumber: document.getElementById("contactNumber").value, nigranLevel: document.getElementById("nigranLevel").value, zimmedarLevel: document.getElementById("zimmedarLevel").value, departmentList: document.getElementById("departmentList").value, risalaReport: document.getElementById("risalaReport").value, pincode: document.getElementById("pincode").value, district: document.getElementById("district").value, division: document.getElementById("division").value, state: document.getElementById("state").value, region: document.getElementById("region").value }) }).then(r => r.json()).then(d => { document.getElementById("dataForm").classList.add("hidden"); document.getElementById("successMessage").classList.remove("hidden"); });
+    }
 </script>
 </body>
 </html>

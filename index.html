@@ -5,121 +5,42 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Weekly Risala Report</title>
     <style>
-        /* Peacock Color Theme */
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #e0f2f1;
-            margin: 0;
-            padding: 20px;
-            display: flex;
-            justify-content: center;
-        }
-        .form-container {
-            background: white;
-            width: 100%;
-            max-width: 600px;
-            padding: 25px;
-            border-radius: 10px;
-            box-shadow: 0px 5px 15px rgba(0, 128, 128, 0.3);
-            border-top: 6px solid #008080;
-        }
-        .header-image {
-            width: 100%;
-            height: auto;
-            border-radius: 8px;
-            margin-bottom: 15px;
-        }
-        h2 {
-            color: #008080;
-            text-align: center;
-            border-bottom: 2px solid #008080;
-            padding-bottom: 10px;
-        }
-        label {
-            font-weight: bold;
-            display: block;
-            margin-top: 15px;
-            color: #333;
-        }
-        input, select {
-            width: 100%;
-            padding: 10px;
-            margin-top: 5px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            box-sizing: border-box;
-            font-size: 15px;
-        }
-        input[readonly] {
-            background-color: #e8f5f5;
-            color: #008080;
-            font-weight: bold;
-            cursor: not-allowed;
-        }
-        .description {
-            font-size: 12px;
-            color: #006666;
-            margin-top: 5px;
-            display: block;
-            background: #f0faf9;
-            padding: 8px;
-            border-radius: 4px;
-            border-left: 3px solid #008080;
-        }
-        .btn-submit {
-            background-color: #008080;
-            color: white;
-            padding: 14px;
-            border: none;
-            width: 100%;
-            font-size: 16px;
-            border-radius: 5px;
-            margin-top: 25px;
-            cursor: pointer;
-            font-weight: bold;
-        }
-        .btn-submit:hover {
-            background-color: #005959;
-        }
-        .hidden {
-            display: none !important;
-        }
-        .message-box {
-            text-align: center;
-            padding: 30px 20px;
-            font-size: 18px;
-            color: #008080;
-            line-height: 1.6;
-            font-weight: bold;
-        }
-        .urdu-text {
-            font-size: 24px;
-            margin-top: 15px;
-            display: block;
-        }
+        body { font-family: Arial, sans-serif; background-color: #e0f2f1; margin: 0; padding: 20px; display: flex; justify-content: center; }
+        .form-container { background: white; width: 100%; max-width: 600px; padding: 25px; border-radius: 10px; box-shadow: 0px 5px 15px rgba(0, 128, 128, 0.3); border-top: 6px solid #008080; }
+        .header-image { width: 100%; height: auto; border-radius: 8px; margin-bottom: 15px; }
+        h2 { color: #008080; text-align: center; border-bottom: 2px solid #008080; padding-bottom: 5px; margin-bottom: 5px; }
+        .dynamic-subheading { text-align: center; color: #006666; font-size: 14px; font-weight: bold; margin-bottom: 20px; }
+        label { font-weight: bold; display: block; margin-top: 15px; color: #333; }
+        input, select { width: 100%; padding: 10px; margin-top: 5px; border: 1px solid #ccc; border-radius: 5px; box-sizing: border-box; font-size: 15px; }
+        input[readonly] { background-color: #e8f5f5; color: #008080; font-weight: bold; cursor: not-allowed; }
+        .description { font-size: 12px; color: #006666; margin-top: 5px; display: block; background: #f0faf9; padding: 8px; border-radius: 4px; border-left: 3px solid #008080; }
+        .btn-submit { background-color: #008080; color: white; padding: 14px; border: none; width: 100%; font-size: 16px; border-radius: 5px; margin-top: 25px; cursor: pointer; font-weight: bold; }
+        .btn-submit:hover { background-color: #005959; }
+        .hidden { display: none !important; }
+        .message-box { text-align: center; padding: 30px 20px; font-size: 18px; color: #008080; line-height: 1.6; font-weight: bold; }
+        .urdu-text { font-size: 24px; margin-top: 15px; display: block; }
+        #loadingOverlay { text-align: center; font-size: 18px; color: #008080; padding: 50px 0; font-weight: bold; }
     </style>
 </head>
 <body>
 
 <div class="form-container" id="mainWrapper">
-    <!-- Thumbnail Image -->
-    <img src="https://via.placeholder.com/600x150/008080/FFFFFF?text=Weekly+Risala+Report+Thumbnail" alt="Thumbnail" class="header-image">
-    
-    <h2>Weekly Risala Report</h2>
+    <img id="dynamicThumbnail" src="" alt="Thumbnail" class="header-image hidden">
+    <h2 id="dynamicHeading">Loading...</h2>
+    <div id="dynamicSubheading" class="dynamic-subheading"></div>
 
-    <!-- MESSAGE JAB LINK OFF HO -->
+    <div id="loadingOverlay">Checking Form Status, Please Wait...</div>
+
     <div id="linkOffMessage" class="hidden message-box">
         Aap Ne Deri Kardi Hai Link Off Ho Chuki hai.<br> Khair Koi Baat Nahi Aap Ab Niyyat Farmalijiye Keh Next Time On Time Risala Padh Kar Link Men Report Submit Kardiya Kare.
     </div>
 
-    <!-- MESSAGE JAB DATA SUBMIT HO JAYE -->
     <div id="successMessage" class="hidden message-box">
         Allah Kareem Aap Ko Murshid Ki Dua Ka Faizan Nasib Farmaye Aameen.<br>
         <span class="urdu-text">جَزَاک اللہ خَیْرًا</span>
     </div>
 
-    <!-- MAIN FORM -->
-    <form id="dataForm" onsubmit="return submitForm(event)">
+    <form id="dataForm" class="hidden" onsubmit="return submitForm(event)">
         
         <label>Chain Select Karein:</label>
         <select id="chainType" onchange="showChainFields()" required>
@@ -128,16 +49,13 @@
             <option value="department">Department Chain</option>
         </select>
 
-        <!-- ALL FIELDS WRAPPER (Hidden initially) -->
         <div id="all-fields" class="hidden">
-            
             <label>Name:</label>
             <input type="text" id="userName" oninput="this.value = this.value.replace(/[^A-Za-z\s]/g, '')" required>
 
             <label>Contact Number:</label>
             <input type="text" id="contactNumber" maxlength="10" minlength="10" oninput="this.value = this.value.replace(/[^0-9]/g, '').replace(/^0+/, '')" required>
 
-            <!-- DYNAMIC FIELDS -->
             <div id="central-fields" class="hidden">
                 <label>Nigran Level:</label>
                 <select id="nigranLevel">
@@ -236,19 +154,14 @@
             <input type="text" id="pincode" maxlength="6" minlength="6" oninput="this.value = this.value.replace(/[^0-9]/g, '').replace(/^0+/, ''); if(this.value.length === 6) fetchDistrict();" required>
             <span class="description" id="pincode-desc"></span>
 
-            <!-- AUTO-FILL FIELDS -->
             <label>District Name:</label>
             <input type="text" id="district" readonly placeholder="Pincode daalne par auto-fill hoga" required>
-            
             <label>Division Name:</label>
             <input type="text" id="division" readonly placeholder="Pincode daalne par auto-fill hoga" required>
-            
             <label>State Name:</label>
             <input type="text" id="state" readonly placeholder="Pincode daalne par auto-fill hoga" required>
-            
             <label>Region Name:</label>
             <input type="text" id="region" readonly placeholder="Pincode daalne par auto-fill hoga" required>
-            
         </div>
 
         <button type="submit" class="btn-submit" id="submitBtn">Submit Report</button>
@@ -256,18 +169,32 @@
 </div>
 
 <script>
-    // ==========================================
-    // AAPKA GOOGLE APP SCRIPT URL (FINAL)
     const scriptURL = "https://script.google.com/macros/s/AKfycbw4CJdIi24Hnywnn7txSnL6CZL2c9Zj9CVGm1HcaWE2skYMbjLNOk4uw2ORIjLJ28Qt/exec";
-    // ==========================================
-
-    const isLinkActive = true; 
 
     window.onload = function() {
-        if (!isLinkActive) {
-            document.getElementById("dataForm").classList.add("hidden");
-            document.getElementById("linkOffMessage").classList.remove("hidden");
-        }
+        fetch(scriptURL + "?checkStatus=true")
+        .then(response => response.json())
+        .then(data => {
+            document.getElementById("loadingOverlay").classList.add("hidden");
+            
+            // DYNAMIC DETAILS SET KARNA
+            if(data.thumbnail) {
+                document.getElementById("dynamicThumbnail").src = data.thumbnail;
+                document.getElementById("dynamicThumbnail").classList.remove("hidden");
+            }
+            if(data.heading) document.getElementById("dynamicHeading").innerHTML = data.heading;
+            if(data.subheading) document.getElementById("dynamicSubheading").innerHTML = data.subheading;
+
+            // ON/OFF CHECK KARNA
+            if (data.status === "OFF") {
+                document.getElementById("linkOffMessage").classList.remove("hidden");
+            } else {
+                document.getElementById("dataForm").classList.remove("hidden");
+            }
+        })
+        .catch(error => {
+            document.getElementById("loadingOverlay").innerHTML = "Network error, please refresh.";
+        });
     };
 
     function showChainFields() {
@@ -281,24 +208,18 @@
             allFields.classList.remove("hidden");
             central.classList.remove("hidden");
             dept.classList.add("hidden");
-            
             document.getElementById("nigranLevel").required = true;
             document.getElementById("zimmedarLevel").required = false;
             document.getElementById("departmentList").required = false;
-            
             pincodeDesc.innerHTML = "Zaili/Alaqa/District Nigran Apne District Ka Pincode Add Kare, Division/State Nigran Apne Division/State Ke Kisi Ek District Ka Pincode Add Kare. Region Nigran Jis District Mein Inki Rehaish Hai Waha Ka Pincode Add Kare.";
-            
         } else if (chain === "department") {
             allFields.classList.remove("hidden");
             central.classList.add("hidden");
             dept.classList.remove("hidden");
-
             document.getElementById("nigranLevel").required = false;
             document.getElementById("zimmedarLevel").required = true;
             document.getElementById("departmentList").required = true;
-            
             pincodeDesc.innerHTML = "Department Ki Kisi Bhi Satah Ke Zimmedar Apne District Ka Pincode Add Kare Jaha Unki Zimmedari Hai Agar HOD/RHM Hai To Jis District Men unki Rehaish & Zimmedari Men Aata Hai Waha Ka Pincode Add Kare.";
-            
         } else {
             allFields.classList.add("hidden");
             central.classList.add("hidden");
@@ -306,10 +227,8 @@
         }
     }
 
-    // Google Sheet se Pincode check karna
     function fetchDistrict() {
         let pincode = document.getElementById("pincode").value;
-        
         document.getElementById("district").value = "Searching...";
         document.getElementById("division").value = "Searching...";
         document.getElementById("state").value = "Searching...";
@@ -324,17 +243,15 @@
             document.getElementById("region").value = data.region || "Not Found";
         })
         .catch(error => {
-            document.getElementById("district").value = "Error fetching data";
-            document.getElementById("division").value = "Error fetching data";
-            document.getElementById("state").value = "Error fetching data";
-            document.getElementById("region").value = "Error fetching data";
+            document.getElementById("district").value = "Error";
+            document.getElementById("division").value = "Error";
+            document.getElementById("state").value = "Error";
+            document.getElementById("region").value = "Error";
         });
     }
 
-    // Google Sheet mein Form Data bhejna
     function submitForm(event) {
         event.preventDefault(); 
-        
         let submitBtn = document.getElementById("submitBtn");
         submitBtn.innerHTML = "Wait, Submitting...";
         submitBtn.disabled = true;
@@ -364,12 +281,11 @@
             document.getElementById("successMessage").classList.remove("hidden");
         })
         .catch(error => {
-            alert("Kuch error aagaya, network check karein.");
+            alert("Error submitting form.");
             submitBtn.innerHTML = "Submit Report";
             submitBtn.disabled = false;
         });
     }
 </script>
-
 </body>
 </html>

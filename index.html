@@ -8,7 +8,7 @@
         /* Peacock Color Theme */
         body {
             font-family: Arial, sans-serif;
-            background-color: #e0f2f1; /* Light Peacock */
+            background-color: #e0f2f1;
             margin: 0;
             padding: 20px;
             display: flex;
@@ -21,7 +21,7 @@
             padding: 25px;
             border-radius: 10px;
             box-shadow: 0px 5px 15px rgba(0, 128, 128, 0.3);
-            border-top: 6px solid #008080; /* Dark Peacock */
+            border-top: 6px solid #008080;
         }
         .header-image {
             width: 100%;
@@ -51,7 +51,7 @@
             font-size: 15px;
         }
         input[readonly] {
-            background-color: #e8f5f5; /* Light Peacock hint */
+            background-color: #e8f5f5;
             color: #008080;
             font-weight: bold;
             cursor: not-allowed;
@@ -67,7 +67,7 @@
             border-left: 3px solid #008080;
         }
         .btn-submit {
-            background-color: #008080; /* Peacock */
+            background-color: #008080;
             color: white;
             padding: 14px;
             border: none;
@@ -128,120 +128,122 @@
             <option value="department">Department Chain</option>
         </select>
 
-        <!-- COMMON FIELDS -->
-        <div id="common-fields" class="hidden">
+        <!-- ALL FIELDS WRAPPER (Hidden initially) -->
+        <div id="all-fields" class="hidden">
+            
+            <!-- 1. NAME -->
             <label>Name:</label>
-            <!-- Sirf A-Z aur space allow karega -->
             <input type="text" id="userName" oninput="this.value = this.value.replace(/[^A-Za-z\s]/g, '')" required>
 
+            <!-- 2. CONTACT NUMBER -->
             <label>Contact Number:</label>
-            <!-- Sirf numbers, 0 se start nahi hoga, theek 10 digit -->
             <input type="text" id="contactNumber" maxlength="10" minlength="10" oninput="this.value = this.value.replace(/[^0-9]/g, '').replace(/^0+/, '')" required>
 
+            <!-- 3. DYNAMIC FIELDS (Central or Department) -->
+            <div id="central-fields" class="hidden">
+                <label>Nigran Level:</label>
+                <select id="nigranLevel">
+                    <option value="">-- Select --</option>
+                    <option>Alaqa Nigran</option>
+                    <option>District/Circle Nigran</option>
+                    <option>Division Nigran</option>
+                    <option>Region Nigran</option>
+                    <option>State Nigran</option>
+                    <option>Zaili Nigran</option>
+                </select>
+            </div>
+
+            <div id="department-fields" class="hidden">
+                <label>Zimmedar Level:</label>
+                <select id="zimmedarLevel">
+                    <option value="">-- Select --</option>
+                    <option>City/Alaqa</option>
+                    <option>District/City/Circle</option>
+                    <option>Division</option>
+                    <option>Gaon/Zaili Halqa</option>
+                    <option>Hind Satah (HOD)/Muawwin HOD</option>
+                    <option>Moallim/Imaam/Moazzin</option>
+                    <option>Office/Assistant Zimmedar</option>
+                    <option>Region</option>
+                    <option>Rukne Hind Mushawarat</option>
+                    <option>State</option>
+                </select>
+
+                <label>Department:</label>
+                <select id="departmentList">
+                    <option value="">-- Select --</option>
+                    <option>12 Maah</option>
+                    <option>Al Madinatul Ilmiya</option>
+                    <option>Audit Department</option>
+                    <option>Construction Department</option>
+                    <option>Darul Ifta Ahle Sunnat</option>
+                    <option>Darul Madinah English School</option>
+                    <option>Darul Sunnah</option>
+                    <option>Donation Box</option>
+                    <option>Donation Cell</option>
+                    <option>Education Department</option>
+                    <option>Faizan Weekend Islamic Classes</option>
+                    <option>Faizane Madina</option>
+                    <option>FGN Channel</option>
+                    <option>Finance Department</option>
+                    <option>Gareeb Nawaz Online Academy</option>
+                    <option>Gharelu Sadqa Box</option>
+                    <option>GNRF (Plantation)</option>
+                    <option>Haftawar Ijtema O Madani Muzakara</option>
+                    <option>Hajj O Umrah</option>
+                    <option>HMO</option>
+                    <option>HR Department</option>
+                    <option>Imamat Course</option>
+                    <option>Imame Masajid</option>
+                    <option>Islahe Aamaal</option>
+                    <option>IT Department</option>
+                    <option>Jamiatul Madina Boys</option>
+                    <option>Jamiatul Madina Girls</option>
+                    <option>Kafan Dafan</option>
+                    <option>Khuddamul Masajid wal Madaris</option>
+                    <option>Madani Courses</option>
+                    <option>Madrasatul Madina Balighan</option>
+                    <option>Madrasatul Madina Boys</option>
+                    <option>Madrasatul Madina Girls</option>
+                    <option>Majlise Rabita</option>
+                    <option>Maktabatul Madina</option>
+                    <option>Media Department</option>
+                    <option>Model Jamia Tul Madina</option>
+                    <option>Mohabbate Badhao</option>
+                    <option>Muawanat Barae Islami Behne</option>
+                    <option>Property Department</option>
+                    <option>Purchase Department</option>
+                    <option>Qafila Department</option>
+                    <option>Rabita Barae Tajiran/ Khususi Tajiran</option>
+                    <option>Rabta Bil Ulama wal Mashaikh & Mazarate Auliya</option>
+                    <option>Reporting Desk - HMO</option>
+                    <option>Roohani Ilaj</option>
+                    <option>Schedule</option>
+                    <option>Sharai Rehnumai Desk</option>
+                    <option>Social Media</option>
+                    <option>Special Persons Department</option>
+                    <option>TAD</option>
+                    <option>Taqseeme Rasail</option>
+                    <option>Tibbi Ilaj</option>
+                    <option>Translation Department</option>
+                    <option>Ushr wa Atraf Gaon</option>
+                </select>
+            </div>
+
+            <!-- 4. RISALA REPORT -->
+            <label>Risala Report:</label>
+            <input type="text" id="risalaReport" maxlength="5" oninput="this.value = this.value.replace(/[^0-9]/g, '').replace(/^0+/, '')" required>
+            <span class="description">Aap ki & Aap Ki Koshish Se Is Hafte Kitno Ne Risala Padha Suna.</span>
+
+            <!-- 5. PINCODE -->
             <label>Pincode Number:</label>
-            <!-- Sirf numbers, 0 se start nahi, theek 6 digit. 6 digit hote hi District aayega -->
             <input type="text" id="pincode" maxlength="6" minlength="6" oninput="this.value = this.value.replace(/[^0-9]/g, '').replace(/^0+/, ''); if(this.value.length === 6) fetchDistrict();" required>
             <span class="description">Zaili/Alaqa/District Nigran Apne District Ka Pincode Add Kare, Division/State Nigran Apne Division/State Ke Kisi Ek District Ka Pincode Add Kare. Region Nigran Jis District Mein Inki Rehaish Hai Waha Ka Pincode Add Kare.</span>
 
+            <!-- 6. DISTRICT NAME -->
             <label>District Name:</label>
             <input type="text" id="district" readonly placeholder="Pincode daalne par auto-fill hoga" required>
-
-            <label>Risala Report:</label>
-            <!-- Max 5 digit, 0 se start nahi hoga -->
-            <input type="text" id="risalaReport" maxlength="5" oninput="this.value = this.value.replace(/[^0-9]/g, '').replace(/^0+/, '')" required>
-            <span class="description">Aap ki & Aap Ki Koshish Se Is Hafte Kitno Ne Risala Padha Suna.</span>
-        </div>
-
-        <!-- CENTRAL CHAIN FIELDS -->
-        <div id="central-fields" class="hidden">
-            <label>Nigran Level:</label>
-            <select id="nigranLevel">
-                <option value="">-- Select --</option>
-                <option>Alaqa Nigran</option>
-                <option>District/Circle Nigran</option>
-                <option>Division Nigran</option>
-                <option>Region Nigran</option>
-                <option>State Nigran</option>
-                <option>Zaili Nigran</option>
-            </select>
-        </div>
-
-        <!-- DEPARTMENT CHAIN FIELDS -->
-        <div id="department-fields" class="hidden">
-            <label>Zimmedar Level:</label>
-            <select id="zimmedarLevel">
-                <option value="">-- Select --</option>
-                <option>City/Alaqa</option>
-                <option>District/City/Circle</option>
-                <option>Division</option>
-                <option>Gaon/Zaili Halqa</option>
-                <option>Hind Satah (HOD)/Muawwin HOD</option>
-                <option>Moallim/Imaam/Moazzin</option>
-                <option>Office/Assistant Zimmedar</option>
-                <option>Region</option>
-                <option>Rukne Hind Mushawarat</option>
-                <option>State</option>
-            </select>
-
-            <label>Department:</label>
-            <select id="departmentList">
-                <option value="">-- Select --</option>
-                <option>12 Maah</option>
-                <option>Al Madinatul Ilmiya</option>
-                <option>Audit Department</option>
-                <option>Construction Department</option>
-                <option>Darul Ifta Ahle Sunnat</option>
-                <option>Darul Madinah English School</option>
-                <option>Darul Sunnah</option>
-                <option>Donation Box</option>
-                <option>Donation Cell</option>
-                <option>Education Department</option>
-                <option>Faizan Weekend Islamic Classes</option>
-                <option>Faizane Madina</option>
-                <option>FGN Channel</option>
-                <option>Finance Department</option>
-                <option>Gareeb Nawaz Online Academy</option>
-                <option>Gharelu Sadqa Box</option>
-                <option>GNRF (Plantation)</option>
-                <option>Haftawar Ijtema O Madani Muzakara</option>
-                <option>Hajj O Umrah</option>
-                <option>HMO</option>
-                <option>HR Department</option>
-                <option>Imamat Course</option>
-                <option>Imame Masajid</option>
-                <option>Islahe Aamaal</option>
-                <option>IT Department</option>
-                <option>Jamiatul Madina Boys</option>
-                <option>Jamiatul Madina Girls</option>
-                <option>Kafan Dafan</option>
-                <option>Khuddamul Masajid wal Madaris</option>
-                <option>Madani Courses</option>
-                <option>Madrasatul Madina Balighan</option>
-                <option>Madrasatul Madina Boys</option>
-                <option>Madrasatul Madina Girls</option>
-                <option>Majlise Rabita</option>
-                <option>Maktabatul Madina</option>
-                <option>Media Department</option>
-                <option>Model Jamia Tul Madina</option>
-                <option>Mohabbate Badhao</option>
-                <option>Muawanat Barae Islami Behne</option>
-                <option>Property Department</option>
-                <option>Purchase Department</option>
-                <option>Qafila Department</option>
-                <option>Rabita Barae Tajiran/ Khususi Tajiran</option>
-                <option>Rabta Bil Ulama wal Mashaikh & Mazarate Auliya</option>
-                <option>Reporting Desk - HMO</option>
-                <option>Roohani Ilaj</option>
-                <option>Schedule</option>
-                <option>Sharai Rehnumai Desk</option>
-                <option>Social Media</option>
-                <option>Special Persons Department</option>
-                <option>TAD</option>
-                <option>Taqseeme Rasail</option>
-                <option>Tibbi Ilaj</option>
-                <option>Translation Department</option>
-                <option>Ushr wa Atraf Gaon</option>
-            </select>
+            
         </div>
 
         <button type="submit" class="btn-submit" id="submitBtn">Submit Report</button>
@@ -255,7 +257,6 @@
     // ==========================================
     const isLinkActive = true; 
 
-    // Form load hote hi check karega link chalu hai ya band
     window.onload = function() {
         if (!isLinkActive) {
             document.getElementById("dataForm").classList.add("hidden");
@@ -263,15 +264,14 @@
         }
     };
 
-    // Chain select karne par fields ko dikhana ya chhupana
     function showChainFields() {
         const chain = document.getElementById("chainType").value;
-        const common = document.getElementById("common-fields");
+        const allFields = document.getElementById("all-fields");
         const central = document.getElementById("central-fields");
         const dept = document.getElementById("department-fields");
 
         if (chain === "central") {
-            common.classList.remove("hidden");
+            allFields.classList.remove("hidden");
             central.classList.remove("hidden");
             dept.classList.add("hidden");
             
@@ -279,7 +279,7 @@
             document.getElementById("zimmedarLevel").required = false;
             document.getElementById("departmentList").required = false;
         } else if (chain === "department") {
-            common.classList.remove("hidden");
+            allFields.classList.remove("hidden");
             central.classList.add("hidden");
             dept.classList.remove("hidden");
 
@@ -287,38 +287,32 @@
             document.getElementById("zimmedarLevel").required = true;
             document.getElementById("departmentList").required = true;
         } else {
-            common.classList.add("hidden");
+            allFields.classList.add("hidden");
             central.classList.add("hidden");
             dept.classList.add("hidden");
         }
     }
 
-    // Pincode daalne par Google Sheet / System se District lana
     function fetchDistrict() {
         let pincode = document.getElementById("pincode").value;
         let districtField = document.getElementById("district");
         
         districtField.value = "Fetching data...";
 
-        // Asli Google Sheet API yahan lagegi. Abhi sirf ek dummy logic hai:
         setTimeout(() => {
             if(pincode === "422001") {
                 districtField.value = "Nashik";
             } else if(pincode === "400001") {
                 districtField.value = "Mumbai";
             } else {
-                districtField.value = "District Found"; // Example fallback
+                districtField.value = "District Found"; 
             }
         }, 1000);
     }
 
-    // Submit button dabane par form hide karke Dua wala message dikhana
     function submitForm(event) {
-        event.preventDefault(); // Page refresh hone se rokna
+        event.preventDefault(); 
         
-        // Yahan par data Google Sheet me bhejane ka code aayega.
-        
-        // Jab data submit ho jaye, form chhupa do aur message dikha do:
         document.getElementById("dataForm").classList.add("hidden");
         document.getElementById("successMessage").classList.remove("hidden");
     }

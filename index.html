@@ -149,10 +149,18 @@
         }); 
     }
     
-    // NAYA: Yahan Button Lock karne ka system lagaya gaya hai
+    // NAYA: Yahan Invalid Pincode par submission block karne ka Check lagaya gaya hai
     function submitForm(e) { 
         e.preventDefault(); 
         
+        // --- Naya Validation Check Shuru ---
+        let districtVal = document.getElementById("district").value;
+        if (districtVal === "" || districtVal === "Not Found") {
+            alert("Kripya sahi Pincode darj karein jo record mein maujood ho.");
+            return; // Agar Pincode galat hai, to form yahin ruk jayega aur submit nahi hoga
+        }
+        // --- Naya Validation Check Khatam ---
+
         let btn = document.getElementById("submitBtn");
         btn.disabled = true; // Button Lock ho gaya
         btn.innerText = "Submitting..."; // Text change ho gaya

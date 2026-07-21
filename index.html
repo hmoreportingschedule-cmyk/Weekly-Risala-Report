@@ -28,6 +28,10 @@
         input, select { width: 100%; padding: 10px; margin-top: 15px; border: 1px solid #ccc; border-radius: 5px; box-sizing: border-box; font-size: 15px; }
         input[readonly] { background-color: var(--light-bg); color: var(--primary); font-weight: bold; }
         .btn-submit { background-color: var(--primary); color: white; padding: 14px; border: none; width: 100%; font-size: 16px; border-radius: 5px; margin-top: 25px; cursor: pointer; font-weight: bold; }
+        
+        /* Disabled button ki styling taaki wo click na ho sake */
+        .btn-submit:disabled { background-color: #7fbfbf; cursor: not-allowed; }
+        
         .hidden { display: none !important; }
         
         .message-box { text-align: center; padding: 20px; font-size: 18px; background-color: var(--primary); color: white; font-weight: bold; border-radius: 8px; margin-bottom: 15px; }
@@ -145,7 +149,22 @@
         }); 
     }
     
-    function submitForm(e) { e.preventDefault(); fetch(scriptURL, { method: "POST", body: JSON.stringify({ chainType: document.getElementById("chainType").value, userName: document.getElementById("userName").value, contactNumber: document.getElementById("contactNumber").value, nigranLevel: document.getElementById("nigranLevel").value, zimmedarLevel: document.getElementById("zimmedarLevel").value, departmentList: document.getElementById("departmentList").value, risalaReport: document.getElementById("risalaReport").value, pincode: document.getElementById("pincode").value, district: document.getElementById("district").value, division: document.getElementById("division").value, state: document.getElementById("state").value, region: document.getElementById("region").value }) }).then(r => r.json()).then(d => { document.getElementById("dataForm").classList.add("hidden"); document.getElementById("successMessage").classList.remove("hidden"); }); }
+    // NAYA: Yahan Button Lock karne ka system lagaya gaya hai
+    function submitForm(e) { 
+        e.preventDefault(); 
+        
+        let btn = document.getElementById("submitBtn");
+        btn.disabled = true; // Button Lock ho gaya
+        btn.innerText = "Submitting..."; // Text change ho gaya
+        
+        fetch(scriptURL, { 
+            method: "POST", 
+            body: JSON.stringify({ chainType: document.getElementById("chainType").value, userName: document.getElementById("userName").value, contactNumber: document.getElementById("contactNumber").value, nigranLevel: document.getElementById("nigranLevel").value, zimmedarLevel: document.getElementById("zimmedarLevel").value, departmentList: document.getElementById("departmentList").value, risalaReport: document.getElementById("risalaReport").value, pincode: document.getElementById("pincode").value, district: document.getElementById("district").value, division: document.getElementById("division").value, state: document.getElementById("state").value, region: document.getElementById("region").value }) 
+        }).then(r => r.json()).then(d => { 
+            document.getElementById("dataForm").classList.add("hidden"); 
+            document.getElementById("successMessage").classList.remove("hidden"); 
+        }); 
+    }
 </script>
 </body>
 </html>

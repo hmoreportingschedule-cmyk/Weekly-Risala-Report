@@ -66,7 +66,9 @@
         .employee-title-box { background-color: var(--dash-primary); color: white; padding: 12px 18px; border-radius: 8px; margin-bottom: 10px; display: inline-block; }
         .employee-title { font-family: Arial, sans-serif; font-size:24px; font-weight:bold; color: #ffffff; letter-spacing: 0.5px; }
         
-        .employee-subtitle { font-family: Arial, sans-serif; font-size:16px; font-weight:bold; color:#000000; margin-top:4px; }
+        /* Updated Sub-heading with Theme Color */
+        .employee-subtitle { font-family: Arial, sans-serif; font-size:18px; font-weight:bold; color:var(--dash-primary); margin-top:4px; }
+        
         .employee-scope { font-family: Arial, sans-serif; font-size:15px; color:#444; font-weight: bold; margin-top:8px; }
         .employee-user { font-family: Arial, sans-serif; font-size:16px; color:#222; font-weight:bold; }
         
@@ -542,7 +544,7 @@
               }
               
               if(d.b4Value) {
-                  document.getElementById('dashSubTitle').innerText = d.b4Value;
+                  document.getElementById('dashSubTitleinnerHTML').innerHTML = 'Risala Name: ' + d.b4Value;
                   document.getElementById('dashSubTitle').style.display = 'block';
               } else {
                   document.getElementById('dashSubTitle').style.display = 'none';

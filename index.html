@@ -5,134 +5,370 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Weekly Risala Report</title>
     
-    <!-- WhatsApp & Social Media Link Preview Tags (Permanent Setup) -->
     <meta property="og:title" content="Weekly Risala Report">
     <meta property="og:description" content="Har Hafte Risala Parh Ya Sunkar Murshid Ki Duaon Me Hissa Paane Ke Liye Report Submit Kijiye.">
-    <!-- Ab image link fix kar di gayi hai, sirf GitHub par photo replace karni hogi -->
     <meta property="og:image" content="https://weekly-risala-report.vercel.app/banner.jpg">
     <meta property="og:image:type" content="image/jpeg">
     <meta property="og:url" content="https://weekly-risala-report.vercel.app">
     <meta property="og:type" content="website">
 
     <style>
-        :root { --primary: #008080; --hover: #005959; --bg: #e0f2f1; --light-bg: #f0faf9; }
-        body { font-family: Arial, sans-serif; background-color: var(--bg); margin: 0; padding: 20px; display: flex; justify-content: center; }
-        .form-container { background: white; width: 100%; max-width: 600px; padding: 25px; border-radius: 10px; box-shadow: 0px 5px 15px rgba(0,0,0,0.1); border-top: 6px solid var(--primary); }
+        :root { 
+            --form-primary: #008080; 
+            --form-hover: #005959; 
+            --form-bg: #e0f2f1; 
+            --form-light-bg: #f0faf9;
+            --dash-primary: #008080;
+            --dash-hover: #005959;
+            --dash-light-bg: #f0faf9;
+        }
+        
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: var(--form-bg); margin: 0; padding: 15px; display: flex; justify-content: center; transition: background-color 0.3s; }
+        
+        .form-container { background: white; width: 100%; box-sizing: border-box; padding: 25px; border-radius: 12px; box-shadow: 0px 8px 24px rgba(0,0,0,0.06); border-top: 6px solid var(--form-primary); margin: 0 auto 20px auto; transition: border-color 0.3s; }
         .header-image { width: 100%; height: auto; border-radius: 8px; margin-bottom: 15px; display: none; }
-        h2 { color: var(--primary); text-align: center; border-bottom: 2px solid var(--primary); padding-bottom: 5px; margin-bottom: 5px; }
+        h2 { color: var(--form-primary); text-align: center; border-bottom: 2px solid var(--form-primary); padding-bottom: 5px; margin-bottom: 5px; }
         
-        .dynamic-subheading { text-align: center; color: white; background-color: var(--primary); padding: 10px; border-radius: 5px; font-size: 20px; font-weight: bold; margin-bottom: 20px; }
+        .dynamic-subheading { text-align: center; color: white; background-color: var(--form-primary); padding: 10px; border-radius: 6px; font-size: 20px; font-weight: bold; margin-bottom: 20px; letter-spacing: 0.5px; }
+        label { font-weight: 600; display: block; margin-top: 15px; color: #444; font-size: 14px; }
+        input, select { width: 100%; padding: 12px 10px; margin-top: 8px; border: 1px solid #cfd8dc; border-radius: 6px; box-sizing: border-box; font-size: 14px; transition: border-color 0.3s; }
+        input:focus, select:focus { border-color: var(--form-primary); outline: none; }
+        input.sys-locked { background-color: var(--form-light-bg); color: var(--form-primary); font-weight: bold; }
         
-        label { font-weight: bold; display: block; margin-top: 15px; color: #333; }
-        input, select { width: 100%; padding: 10px; margin-top: 15px; border: 1px solid #ccc; border-radius: 5px; box-sizing: border-box; font-size: 15px; }
-        input[readonly] { background-color: var(--light-bg); color: var(--primary); font-weight: bold; }
-        .btn-submit { background-color: var(--primary); color: white; padding: 14px; border: none; width: 100%; font-size: 16px; border-radius: 5px; margin-top: 25px; cursor: pointer; font-weight: bold; }
-        
+        .btn-submit { background-color: var(--form-primary); color: white; padding: 14px; border: none; width: 100%; font-size: 16px; border-radius: 6px; margin-top: 24px; cursor: pointer; font-weight: bold; transition: background-color 0.3s; }
+        .btn-submit:hover { background-color: var(--form-hover); }
         .btn-submit:disabled { background-color: #7fbfbf; cursor: not-allowed; }
-        
         .hidden { display: none !important; }
+        .message-box { text-align: center; padding: 20px; font-size: 18px; background-color: var(--form-primary); color: white; font-weight: bold; border-radius: 8px; margin-bottom: 15px; }
+    
+        .site-shell { width:100%; max-width:1200px; }
         
-        .message-box { text-align: center; padding: 20px; font-size: 18px; background-color: var(--primary); color: white; font-weight: bold; border-radius: 8px; margin-bottom: 15px; }
+        .topbar { background:#fff; width: 100%; box-sizing: border-box; min-height:60px; border-radius:10px; box-shadow:0 4px 15px rgba(0,0,0,.05); display:flex; align-items:center; justify-content:space-between; padding:0 20px; margin-bottom:16px; }
+        .brand { font-family: Arial, sans-serif; color:var(--dash-primary); font-size:20px; font-weight:bold; letter-spacing: 0.5px; }
+        .office-btn { font-family: Arial, sans-serif; border:0; background:var(--dash-primary); color:#fff; padding:10px 18px; border-radius:6px; font-weight:bold; font-size: 14px; cursor:pointer; transition: 0.2s; }
+        .office-btn:hover { background:var(--dash-hover); transform: translateY(-1px); }
+        
+        .login-overlay { position:fixed; inset:0; background:rgba(0,0,0,.6); display:flex; align-items:center; justify-content:center; padding:20px; z-index:1000; backdrop-filter: blur(3px); }
+        .login-card { width:100%; max-width:400px; background:#fff; border-radius:14px; padding:30px; box-shadow:0 20px 50px rgba(0,0,0,.3); border-top:6px solid var(--dash-primary); }
+        .login-card h2 { border:0; margin:0 0 8px; padding:0; font-size: 24px; color:var(--dash-primary);}
+        .login-card p { text-align:center; color:#666; margin:0 0 20px; font-size: 14px; }
+        .login-actions { display:flex; gap:12px; margin-top: 20px; }
+        .login-actions button { flex:1; }
+        .btn-dash { background:var(--dash-primary); color:white; border:0; padding:12px; border-radius:6px; font-weight:700; cursor:pointer; }
+        .btn-secondary { background:#e0e0e0; color:#333; border:0; padding:14px; border-radius:6px; font-weight:700; cursor:pointer; transition: 0.2s; }
+        .btn-secondary:hover { background:#d0d0d0; }
+        .login-error { display:none; margin-top:15px; background:#fde8e8; color:#b42318; padding:12px; border-radius:8px; text-align:center; font-weight:600; font-size:14px; }
+        
+        .employee-view { display:none; width:100%; max-width:1200px; margin:0 auto; }
+        
+        .employee-top { background:#fff; padding:20px 24px; display:flex; justify-content:space-between; align-items:flex-start; box-shadow:0 4px 15px rgba(0,0,0,.04); border-radius:10px; margin-bottom: 16px; }
+        
+        .employee-title-box { background-color: var(--dash-primary); color: white; padding: 12px 18px; border-radius: 8px; margin-bottom: 10px; display: inline-block; }
+        .employee-title { font-family: Arial, sans-serif; font-size:24px; font-weight:bold; color: #ffffff; letter-spacing: 0.5px; }
+        
+        .employee-subtitle { font-family: Arial, sans-serif; font-size:16px; font-weight:bold; color:#000000; margin-top:4px; }
+        .employee-scope { font-family: Arial, sans-serif; font-size:15px; color:#444; font-weight: bold; margin-top:8px; }
+        .employee-user { font-family: Arial, sans-serif; font-size:16px; color:#222; font-weight:bold; }
+        
+        .logout-btn { border:0; background:#dc3545; color:#fff; padding:8px 16px; border-radius:6px; cursor:pointer; font-weight:700; font-size: 13px; transition: 0.2s; }
+        .logout-btn:hover { background:#c82333; }
+        .refresh-btn { border:0; background:var(--dash-primary); color:#fff; padding:9px 16px; border-radius:6px; cursor:pointer; font-weight:700; font-size:13px; transition: 0.2s; }
+        .refresh-btn:hover { background:var(--dash-hover); }
+        
+        .employee-wrap { margin:0 auto; padding:0; }
+        
+        .cards { display:grid; grid-template-columns: repeat(2, 1fr); gap:16px; margin-bottom:16px;}
+        .stat { background:#fff; border-radius:10px; padding:14px 20px; box-shadow:0 4px 15px rgba(0,0,0,.04); border-left: 6px solid var(--dash-primary); display: flex; align-items: center; justify-content: space-between; }
+        
+        .filters { background:#fff; border-radius:10px; padding:16px; margin-bottom: 16px; box-shadow:0 4px 15px rgba(0,0,0,.04); display:grid; grid-template-columns:1.25fr repeat(6,1fr); gap:12px; }
+        .filters input,.filters select { width:100%; padding:10px; border:1px solid #dce1e4; border-radius:6px; box-sizing:border-box; margin:0; font-size: 13px; }
+        
+        .chart-grid { display:grid; grid-template-columns:repeat(2,1fr); gap:16px; margin-bottom: 16px; }
+        .chart-card { 
+            background:#fff; border-radius:10px; padding:18px; 
+            box-shadow:0 4px 15px rgba(0,0,0,.04); 
+            display: flex; flex-direction: column; 
+            height: 310px; 
+            min-height: 0; min-width: 0;
+            box-sizing: border-box;
+        }
+        .chart-title { font-family: Arial, sans-serif; font-weight:bold; color:var(--dash-primary); margin-bottom:12px; font-size: 15px; text-transform: uppercase; letter-spacing: 0.5px; }
+        .chart-wrap { position:relative; flex: 1; min-height: 0; min-width: 0; width: 100%; overflow:hidden; }
+        
+        .tablebox { background:#fff; border-radius:10px; padding:18px; box-shadow:0 4px 15px rgba(0,0,0,.04); overflow-x:auto; margin-bottom: 24px;}
+        .employee-table { width:100%; border-collapse:collapse; min-width:900px; text-align:left;}
+        .employee-table th, .employee-table td { padding:10px 12px; border-bottom:1px solid #f0f0f0; font-size:13px; }
+        .employee-table th { font-family: Arial, sans-serif; background:#f8fafc; color:var(--dash-primary); font-weight: bold; text-transform: uppercase; font-size: 12px; letter-spacing: 0.5px; }
+        .employee-table tbody tr:hover { background-color: var(--dash-light-bg); }
+        
+        .dash-msg { padding:20px; text-align:center; color:#888; font-size: 15px; font-style: italic; }
+        .dash-info { margin:10px 0; font-size:12px; color:#888; text-align:right; font-weight: 500; }
+        
+        .page-btn { padding: 6px 12px; border: 1px solid var(--dash-primary); background: #fff; color: var(--dash-primary); cursor: pointer; border-radius: 5px; font-weight: 700; font-size: 13px; transition: 0.2s; }
+        .page-btn:hover { background: var(--dash-light-bg); }
+        .page-btn.active { background: var(--dash-primary); color: #fff; }
+        .page-btn:disabled { opacity: 0.4; cursor: not-allowed; background: #f9f9f9; border-color: #ddd; color: #aaa; }
+
+        ::-webkit-scrollbar { width: 6px; height: 6px; }
+        ::-webkit-scrollbar-track { background: #f1f1f1; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb { background: #ccc; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: var(--dash-primary); }
+
+        @media(max-width:800px){ 
+            .cards{grid-template-columns:1fr} 
+            .filters{grid-template-columns:1fr 1fr} 
+            .chart-grid{grid-template-columns:1fr} 
+            .employee-top{flex-direction:column; gap:15px;}
+        }
+        @media(max-width:500px){ 
+            .cards,.filters{grid-template-columns:1fr} 
+        }
     </style>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.0.0"></script>
+    <script src="https://cdn.sheetjs.com/xlsx-0.20.3/package/dist/xlsx.full.min.js"></script>
 </head>
 <body>
-<div class="form-container" id="mainWrapper">
-    <img id="dynamicThumbnail" src="" alt="Thumbnail" class="header-image">
-    <h2 id="dynamicHeading">Loading...</h2>
-    <div id="dynamicSubheading" class="dynamic-subheading"></div>
-    <div id="loadingOverlay">Checking Form Status...</div>
+<div class="site-shell">
     
-    <!-- Link Off Message -->
-    <div id="linkOffMessage" class="hidden message-box"></div>
-    <div id="successMessage" class="hidden message-box">Allah Kareem Aap Ko Ameere Ahle Sunnat Ki Dua Ka Faizan Nasib Farmaye<br>Aameen. جَزَاک اللہ خَیْرًا</div>
-    
-    <form id="dataForm" class="hidden" onsubmit="return submitForm(event)">
-        <select id="chainType" onchange="showChainFields()" required>
-            <option value="" disabled selected>-- Select Chain --</option>
-            <option value="central">Nigran</option>
-            <option value="department">Department</option>
-        </select>
-        
-        <div id="all-fields" class="hidden">
-            <!-- Name Field -->
-            <input type="text" id="userName" placeholder="Name (English Only)" oninput="this.value = this.value.replace(/[^A-Za-z\s]/g, '')" title="Sirf alphabets (text) hi allow hain" required>
-            
-            <!-- Contact Number Field -->
-            <input type="text" id="contactNumber" placeholder="Mobile Number (10 Digits)" minlength="10" maxlength="10" pattern="[1-9][0-9]{9}" oninput="this.value = this.value.replace(/[^0-9]/g, ''); if(this.value.startsWith('0')) this.value = this.value.substring(1);" title="10 digit ka number darj karein jo 0 se shuru na ho" required>
-            
-            <!-- Pincode Field -->
-            <input type="text" id="pincode" placeholder="Pincode (6 Digits)" minlength="6" maxlength="6" pattern="[1-9][0-9]{5}" oninput="this.setCustomValidity(''); this.value = this.value.replace(/[^0-9]/g, ''); if(this.value.startsWith('0')) this.value = this.value.substring(1); if(this.value.length === 6) fetchDistrict();" title="6 digit ka Pincode darj karein jo 0 se shuru na ho" required>
-            <div style="font-size: 12px; color: #555; margin-top: 5px; margin-bottom: 5px; line-height: 1.4;">
-                Jis Zimmedar Ki Jis District Men Zimmedari Hai Woh Disrict Ka Pincode Add Kare, HOD/RHM/Office Zimmedar Inki Rehaish Jis District Men Usi Ka Pincode Add Kare.
-            </div>
-            
-            <div id="central-fields" class="hidden">
-                <select id="nigranLevel"><option value="" disabled selected>Select Nigran Level</option><option>Alaqa Nigran</option><option>District/Circle Nigran</option><option>Division Nigran</option><option>Region Nigran</option><option>State Nigran</option><option>Zaili Nigran</option></select>
-            </div>
-            
-            <div id="department-fields" class="hidden">
-                <select id="zimmedarLevel"><option value="" disabled selected>Select Zimmedar Level</option><option>City/Alaqa</option><option>District/City/Circle</option><option>Division</option><option>Gaon/Zaili Halqa</option><option>Hind Satah (HOD)/Muawwin HOD</option><option>Moallim/Imaam/Moazzin</option><option>Office/Assistant Zimmedar</option><option>Region</option><option>Rukne Hind Mushawarat</option><option>State</option></select>
-                <select id="departmentList"><option value="" disabled selected>Select Department</option><option>12 Maah</option><option>Al Madinatul Ilmiya</option><option>Audit Department</option><option>Construction Department</option><option>Darul Ifta Ahle Sunnat</option><option>Darul Madinah English School</option><option>Darul Sunnah</option><option>Donation Box</option><option>Donation Cell</option><option>Education Department</option><option>Faizan Weekend Islamic Classes</option><option>Faizane Madina</option><option>FGN Channel</option><option>Finance Department</option><option>Gareeb Nawaz Online Academy</option><option>Gharelu Sadqa Box</option><option>GNRF (Plantation)</option><option>Haftawar Ijtema O Madani Muzakara</option><option>Hajj O Umrah</option><option>HMO</option><option>HR Department</option><option>Imamat Course</option><option>Imame Masajid</option><option>Islahe Aamaal</option><option>IT Department</option><option>Jamiatul Madina Boys</option><option>Jamiatul Madina Girls</option><option>Kafan Dafan</option><option>Khuddamul Masajid wal Madaris</option><option>Madani Courses</option><option>Madrasatul Madina Balighan</option><option>Madrasatul Madina Boys</option><option>Madrasatul Madina Girls</option><option>Majlise Rabita</option><option>Maktabatul Madina</option><option>Media Department</option><option>Model Jamia Tul Madina</option><option>Mohabbate Badhao</option><option>Muawanat Barae Islami Behne</option><option>Property Department</option><option>Professionals Department</option><option>Purchase Department</option><option>Qafila Department</option><option>Rabita Barae Tajiran/ Khususi Tajiran</option><option>Rabta Bil Ulama wal Mashaikh & Mazarate Auliya</option><option>Reporting Desk - HMO</option><option>Roohani Ilaj</option><option>Schedule</option><option>Sharai Rehnumai Desk</option><option>Social Media</option><option>Special Persons Department</option><option>TAD</option><option>Taqseeme Rasail</option><option>Tibbi Ilaj</option><option>Translation Department</option><option>Ushr wa Atraf Gaon</option></select>
-            </div>
-            
-            <input type="text" id="district" placeholder="District" readonly required>
-            <input type="text" id="division" placeholder="Division" readonly>
-            <input type="text" id="state" placeholder="State" readonly>
-            <input type="text" id="region" placeholder="Region" readonly>
-
-            <input type="text" id="risalaReport" placeholder="Weekly Risala Report (Max 4 Digits)" maxlength="4" pattern="[1-9][0-9]{0,3}" oninput="this.value = this.value.replace(/[^0-9]/g, ''); if(this.value.startsWith('0')) this.value = this.value.substring(1);" title="Maximum 4 digits, 0 se shuru nahi ho sakta" required>
-            <div style="font-size: 12px; color: #555; margin-top: 5px; margin-bottom: 5px; line-height: 1.4;">
-                Aap ki & Aap Ki Koshish Se Is Hafte Kitno Ne Risala Padha Suna.
-            </div>
-            
+    <div style="width:100%;max-width:600px;position:relative;margin:0 auto;">
+        <div class="topbar">
+            <div class="brand">Weekly Risala Report</div>
+            <button class="office-btn" type="button" onclick="openOfficeLogin()">Office Login</button>
         </div>
-        <button type="submit" class="btn-submit" id="submitBtn">Submit Report</button>
-    </form>
+
+        <div class="form-container" id="mainWrapper">
+            <img id="dynamicThumbnail" src="" alt="Thumbnail" class="header-image">
+            <h2 id="dynamicHeading">Loading...</h2>
+            <div id="dynamicSubheading" class="dynamic-subheading"></div>
+            <div id="loadingOverlay" style="padding: 20px 0; font-size: 16px; color: var(--form-primary); font-weight: bold; text-align: center;">Checking Form Status... Please Wait.</div>
+            
+            <div id="linkOffMessage" class="hidden message-box"></div>
+            <div id="successMessage" class="hidden message-box">Allah Kareem Aap Ko Murshid Ki Dua Ka Faizan Nasib Farmaye<br>Aameen. جَزَاک اللہ خَیْرًا</div>
+            
+            <form id="dataForm" class="hidden" autocomplete="off" onmouseenter="unlockInputs()" ontouchstart="unlockInputs()" onsubmit="return submitForm(event)">
+                <select id="chainType" onchange="showChainFields()" required>
+                    <option value="" disabled selected>-- Select Chain --</option>
+                    <option value="central">Nigran</option>
+                    <option value="department">Department</option>
+                </select>
+                
+                <div id="all-fields" class="hidden">
+                    <input type="text" id="userName" class="user-input" placeholder="Name (English Only)" autocomplete="new-password" readonly onfocus="unlockInputs()" oninput="this.value = this.value.replace(/[^A-Za-z\s]/g, '')" title="Sirf alphabets (text) hi allow hain" required>
+                    
+                    <input type="text" id="contactNumber" class="user-input" placeholder="Mobile Number (10 Digits)" autocomplete="new-password" readonly onfocus="unlockInputs()" minlength="10" maxlength="10" pattern="[1-9][0-9]{9}" oninput="this.value = this.value.replace(/[^0-9]/g, ''); if(this.value.startsWith('0')) this.value = this.value.substring(1);" title="10 digit ka number darj karein jo 0 se shuru na ho" required>
+                    
+                    <input type="text" id="pincode" class="user-input" placeholder="Pincode (6 Digits)" autocomplete="new-password" readonly onfocus="unlockInputs()" minlength="6" maxlength="6" pattern="[1-9][0-9]{5}" oninput="this.setCustomValidity(''); this.value = this.value.replace(/[^0-9]/g, ''); if(this.value.startsWith('0')) this.value = this.value.substring(1); if(this.value.length === 6) fetchDistrict();" title="6 digit ka Pincode darj karein jo 0 se shuru na ho" required>
+                    
+                    <div style="font-size: 12px; color: #666; margin-top: 5px; margin-bottom: 5px; line-height: 1.5;">
+                        Jis Zimmedar Ki Jis District Men Zimmedari Hai Woh Disrict Ka Pincode Add Kare, HOD/RHM/Office Zimmedar Inki Rehaish Jis District Men Usi Ka Pincode Add Kare.
+                    </div>
+                    
+                    <div id="central-fields" class="hidden">
+                        <select id="nigranLevel"><option value="" disabled selected>Select Nigran Level</option><option>Alaqa Nigran</option><option>District/Circle Nigran</option><option>Division Nigran</option><option>Region Nigran</option><option>State Nigran</option><option>Zaili Nigran</option></select>
+                    </div>
+                    
+                    <div id="department-fields" class="hidden">
+                        <select id="zimmedarLevel"><option value="" disabled selected>Select Zimmedar Level</option><option>City/Alaqa</option><option>District/City/Circle</option><option>Division</option><option>Gaon/Zaili Halqa</option><option>Hind Satah (HOD)/Muawwin HOD</option><option>Moallim/Imaam/Moazzin</option><option>Office/Assistant Zimmedar</option><option>Region</option><option>Rukne Hind Mushawarat</option><option>State</option></select>
+                        <select id="departmentList"><option value="" disabled selected>Select Department</option><option>12 Maah</option><option>Al Madinatul Ilmiya</option><option>Audit Department</option><option>Construction Department</option><option>Darul Ifta Ahle Sunnat</option><option>Darul Madinah English School</option><option>Darul Sunnah</option><option>Donation Box</option><option>Donation Cell</option><option>Education Department</option><option>Faizan Weekend Islamic Classes</option><option>Faizane Madina</option><option>FGN Channel</option><option>Finance Department</option><option>Gareeb Nawaz Online Academy</option><option>Gharelu Sadqa Box</option><option>GNRF (Plantation)</option><option>Haftawar Ijtema O Madani Muzakara</option><option>Hajj O Umrah</option><option>HMO</option><option>HR Department</option><option>Imamat Course</option><option>Imame Masajid</option><option>Islahe Aamaal</option><option>IT Department</option><option>Jamiatul Madina Boys</option><option>Jamiatul Madina Girls</option><option>Kafan Dafan</option><option>Khuddamul Masajid wal Madaris</option><option>Madani Courses</option><option>Madrasatul Madina Balighan</option><option>Madrasatul Madina Boys</option><option>Madrasatul Madina Girls</option><option>Majlise Rabita</option><option>Maktabatul Madina</option><option>Media Department</option><option>Model Jamia Tul Madina</option><option>Mohabbate Badhao</option><option>Muawanat Barae Islami Behne</option><option>Property Department</option><option>Professionals Department</option><option>Purchase Department</option><option>Qafila Department</option><option>Rabita Barae Tajiran/ Khususi Tajiran</option><option>Rabta Bil Ulama wal Mashaikh & Mazarate Auliya</option><option>Reporting Desk - HMO</option><option>Roohani Ilaj</option><option>Schedule</option><option>Sharai Rehnumai Desk</option><option>Social Media</option><option>Special Persons Department</option><option>TAD</option><option>Taqseeme Rasail</option><option>Tibbi Ilaj</option><option>Translation Department</option><option>Ushr wa Atraf Gaon</option></select>
+                    </div>
+                    
+                    <input type="text" id="district" class="sys-locked" placeholder="District" readonly required>
+                    <input type="text" id="division" class="sys-locked" placeholder="Division" readonly>
+                    <input type="text" id="state" class="sys-locked" placeholder="State" readonly>
+                    <input type="text" id="region" class="sys-locked" placeholder="Region" readonly>
+
+                    <input type="text" id="risalaReport" class="user-input" placeholder="Weekly Risala Report (Max 4 Digits)" autocomplete="new-password" readonly onfocus="unlockInputs()" maxlength="4" pattern="[1-9][0-9]{0,3}" oninput="this.value = this.value.replace(/[^0-9]/g, ''); if(this.value.startsWith('0')) this.value = this.value.substring(1);" title="Maximum 4 digits, 0 se shuru nahi ho sakta" required>
+                    
+                    <div style="font-size: 12px; color: #666; margin-top: 5px; margin-bottom: 5px; line-height: 1.5;">
+                        Aap ki & Aap Ki Koshish Se Is Hafte Kitno Ne Risala Padha Suna.
+                    </div>
+                </div>
+                <button type="submit" class="btn-submit" id="submitBtn">Submit Report</button>
+            </form>
+        </div>
+    </div>
+
+    <div id="employeeView" class="employee-view">
+      <div class="employee-top">
+        <div>
+            <div class="employee-title-box">
+                <div class="employee-title">Weekly Risala Report - Dashboard</div>
+            </div>
+            <div id="dashSubTitle" class="employee-subtitle"></div>
+            <div id="scope" class="employee-scope"></div>
+        </div>
+        <div style="display: flex; flex-direction: column; align-items: flex-end; gap: 10px;">
+            <div style="display: flex; align-items: center; gap: 12px;">
+                <div id="b6Box" style="background:var(--dash-light-bg); border: 2px solid var(--dash-primary); color:var(--dash-primary); padding:4px 12px; border-radius:6px; font-weight:bold; font-size:13px; display:none; align-items:center; text-align:center;"></div>
+                <div id="liveDateTime" style="font-weight: 700; color: var(--dash-primary); font-size: 13px;"></div>
+                <button class="logout-btn" type="button" onclick="officeLogout()">Logout</button>
+            </div>
+            <div style="display:flex; gap:10px; align-items:center;">
+                <div id="who" class="employee-user"></div>
+                <button class="refresh-btn" type="button" onclick="refreshDashboard()">Refresh</button>
+                <button class="refresh-btn" type="button" onclick="downloadExcel()" style="background:#198754">Download Excel</button>
+            </div>
+        </div>
+      </div>
+      
+      <div class="employee-wrap">
+        
+        <div id="stats" class="cards"></div>
+        
+        <div class="filters">
+          <input id="search" placeholder="Search..." oninput="renderDashboard()">
+          <select id="dashRegion" onchange="onRegionChange()"><option value="">Region</option></select>
+          <select id="dashState" onchange="onStateChange()"><option value="">State</option></select>
+          <select id="dashDivision" onchange="onDivisionChange()"><option value="">Division</option></select>
+          <select id="dashDistrict" onchange="onDistrictChange()"><option value="">District</option></select>
+          <select id="dashDepartment" onchange="onDepartmentChange()"><option value="">Department</option></select>
+          <select id="dashChain" onchange="onChainChange()"><option value="">Chain</option></select>
+        </div>
+        
+        <div id="chartGrid" class="chart-grid"></div>
+
+        <div id="dashInfo" class="dash-info"></div>
+        
+        <div class="tablebox">
+          <div id="dashMessage" class="dash-msg">Loading reports...</div>
+          <table id="dashTable" class="employee-table" style="display:none">
+            <thead><tr><th>Date</th><th>Name</th><th>Contact</th><th>Chain</th><th>Level</th><th>Department</th><th>Report</th><th>District</th><th>Division</th><th>State</th><th>Region</th></tr></thead>
+            <tbody id="dashBody"></tbody>
+          </table>
+          <div id="paginationControls" style="display: flex; justify-content: center; gap: 6px; margin-top: 15px;"></div>
+        </div>
+      </div>
+    </div>
 </div>
+
+<div id="loginOverlay" class="login-overlay hidden">
+  <div class="login-card">
+    <h2>Office Login</h2>
+    <p>Weekly Risala Report Dashboard</p>
+    <form onsubmit="officeLogin(event)">
+      <label for="officeUserId">User ID</label>
+      <input id="officeUserId" autocomplete="username" placeholder="Enter User ID" required>
+      <label for="officePassword">Password</label>
+      <input id="officePassword" type="password" autocomplete="current-password" placeholder="Enter Password" required>
+      <div class="login-actions">
+        <button class="btn-dash" id="officeLoginBtn" type="submit">Login</button>
+        <button class="btn-secondary" type="button" onclick="closeOfficeLogin()">Cancel</button>
+      </div>
+      <div id="loginError" class="login-error"></div>
+    </form>
+  </div>
+</div>
+
 <script>
     const scriptURL = "https://script.google.com/macros/s/AKfycbw4CJdIi24Hnywnn7txSnL6CZL2c9Zj9CVGm1HcaWE2skYMbjLNOk4uw2ORIjLJ28Qt/exec";
-    const themes = {
-        "Peacock": { primary: "#008080", hover: "#005959", bg: "#e0f2f1", lightBg: "#f0faf9" },
-        "Blue":    { primary: "#0056b3", hover: "#003d82", bg: "#e6f2ff", lightBg: "#f0f7ff" },
-        "Red":     { primary: "#dc3545", hover: "#a71d2a", bg: "#fcebec", lightBg: "#fdf3f4" },
-        "Green":   { primary: "#28a745", hover: "#1e7e34", bg: "#e8f5e9", lightBg: "#f1f8f1" },
-        "Orange":  { primary: "#fd7e14", hover: "#c6600d", bg: "#fff2e6", lightBg: "#fff8f0" },
-        "Purple":  { primary: "#6f42c1", hover: "#59339d", bg: "#f3e8ff", lightBg: "#f9f4ff" },
-        "Dark":    { primary: "#343a40", hover: "#23272b", bg: "#e9ecef", lightBg: "#f8f9fa" },
-        "Teal":    { primary: "#20c997", hover: "#17a2b8", bg: "#e0fafa", lightBg: "#f0fcfc" },
-        "Brown":   { primary: "#795548", hover: "#5d4037", bg: "#efebe9", lightBg: "#f5f3f1" },
-        "Pink":    { primary: "#e83e8c", hover: "#c23373", bg: "#fcecf3", lightBg: "#fdf4f7" }
-    };
-    function applyTheme(t) { let s = themes[t] || themes["Peacock"]; document.documentElement.style.setProperty('--primary', s.primary); document.documentElement.style.setProperty('--hover', s.hover); document.documentElement.style.setProperty('--bg', s.bg); document.documentElement.style.setProperty('--light-bg', s.lightBg); }
-    window.onload = function() {
-        fetch(scriptURL + "?checkStatus=true").then(r => r.json()).then(data => {
+    const colorPalette = ['#173F5F', '#20639B', '#3CAEA3', '#F6D55C', '#ED553B', '#f0a014', '#dded7f', '#6b2013', '#51a496', '#b8d099', '#3e3456'];
+
+    setInterval(() => {
+        if (document.getElementById('employeeView').style.display === 'block') {
+            refreshDashboard();
+        }
+    }, 180000);
+
+    let inputsUnlocked = false;
+    function unlockInputs() {
+        if (!inputsUnlocked) {
+            document.querySelectorAll('.user-input').forEach(el => el.removeAttribute('readonly'));
+            inputsUnlocked = true;
+        }
+    }
+
+    function updateClock() {
+        const now = new Date();
+        const pad = n => String(n).padStart(2, '0');
+        const dt = document.getElementById('liveDateTime');
+        if(dt) dt.textContent = `Date: ${pad(now.getDate())}/${pad(now.getMonth()+1)}/${now.getFullYear()} | Time: ${pad(now.getHours())}:${pad(now.getMinutes())}:${pad(now.getSeconds())}`;
+    }
+    setInterval(updateClock, 1000);
+    document.addEventListener("DOMContentLoaded", updateClock);
+
+    function applyTheme(colorStr) { 
+        let primary = "#008080"; 
+        if(colorStr) {
+            colorStr = colorStr.trim();
+            if(/^[0-9A-F]{6}$/i.test(colorStr)) colorStr = '#' + colorStr;
+            primary = colorStr;
+        }
+        
+        document.documentElement.style.setProperty('--form-primary', primary); 
+        document.documentElement.style.setProperty('--form-hover', primary); 
+        
+        if(/^#[0-9A-F]{6}$/i.test(primary)) {
+            document.documentElement.style.setProperty('--form-bg', primary + '1A'); 
+            document.documentElement.style.setProperty('--form-light-bg', primary + '0D'); 
+        } else {
+            document.documentElement.style.setProperty('--form-bg', '#e0f2f1');
+            document.documentElement.style.setProperty('--form-light-bg', '#f0faf9');
+        }
+    }
+    
+    document.addEventListener("DOMContentLoaded", function() {
+        fetch(scriptURL + "?checkStatus=true&nocache=" + new Date().getTime(), { cache: "no-store" })
+        .then(response => response.json()) 
+        .then(data => {
             document.getElementById("loadingOverlay").classList.add("hidden");
-            if(data.thumbnail) { 
-                let img = document.getElementById("dynamicThumbnail");
-                let fId = data.thumbnail.split('/d/')[1]?.split('/')[0];
-                if(fId) { img.src = "https://lh3.googleusercontent.com/d/" + fId; img.style.display = "block"; }
+
+            if(data.status === "Error") {
+                document.getElementById("loadingOverlay").innerHTML = "<div class='message-box' style='background-color:#dc3545;'><b>Backend Error!</b><br>" + data.message + "</div>";
+                document.getElementById("loadingOverlay").classList.remove("hidden");
+                document.getElementById("dataForm").classList.add("hidden"); 
+                return;
             }
-            document.getElementById("dynamicHeading").innerHTML = data.heading;
-            document.getElementById("dynamicSubheading").innerHTML = data.subheading;
+            
+            if(data.thumbnail) { 
+                try {
+                    let img = document.getElementById("dynamicThumbnail");
+                    if (data.thumbnail.includes('/d/')) {
+                        let fId = data.thumbnail.split('/d/')[1].split('/')[0];
+                        img.src = "https://lh3.googleusercontent.com/d/" + fId;
+                    } else {
+                        img.src = data.thumbnail; 
+                    }
+                    img.style.display = "block"; 
+                } catch(err) { console.log("Thumbnail Error:", err); }
+            }
+            
+            document.getElementById("dynamicHeading").innerHTML = data.heading || "Weekly Risala Report";
+            document.getElementById("dynamicSubheading").innerHTML = data.subheading || "";
+            
             applyTheme(data.theme);
             
-            if(data.linkOffMsg) {
-                document.getElementById("linkOffMessage").innerHTML = data.linkOffMsg;
+            if(data.status === "OFF") {
+                let offMsgBox = document.getElementById("linkOffMessage");
+                offMsgBox.innerHTML = data.linkOffMsg || "Form is temporarily off.";
+                offMsgBox.style.backgroundColor = "#dc3545"; 
+                offMsgBox.style.color = "white";             
+                offMsgBox.classList.remove("hidden");
+                document.getElementById("dataForm").classList.add("hidden"); 
+            } else {
+                document.getElementById("linkOffMessage").classList.add("hidden");
+                document.getElementById("dataForm").classList.remove("hidden");
             }
-            
-            if(data.status === "OFF") document.getElementById("linkOffMessage").classList.remove("hidden");
-            else document.getElementById("dataForm").classList.remove("hidden");
+        })
+        .catch(error => {
+            document.getElementById("loadingOverlay").innerHTML = "<div class='message-box' style='background-color:#dc3545;'>Network Error! Kripya internet connection check karke page refresh karein.</div>";
         });
-    };
-    function showChainFields() { const c = document.getElementById("chainType").value; document.getElementById("all-fields").classList.remove("hidden"); document.getElementById("central-fields").classList.toggle("hidden", c !== "central"); document.getElementById("department-fields").classList.toggle("hidden", c !== "department"); }
+    });
+    
+    function showChainFields() { 
+        const c = document.getElementById("chainType").value; 
+        document.getElementById("all-fields").classList.remove("hidden"); 
+        document.getElementById("central-fields").classList.toggle("hidden", c !== "central"); 
+        document.getElementById("department-fields").classList.toggle("hidden", c !== "department"); 
+    }
     
     function fetchDistrict() { 
         let pInput = document.getElementById("pincode");
         fetch(scriptURL + "?pincode=" + pInput.value).then(r => r.json()).then(d => { 
-            document.getElementById("district").value = d.district; 
-            document.getElementById("division").value = d.division; 
-            document.getElementById("state").value = d.state; 
-            document.getElementById("region").value = d.region; 
+            document.getElementById("district").value = d.district || "Not Found"; 
+            document.getElementById("division").value = d.division || "Not Found"; 
+            document.getElementById("state").value = d.state || "Not Found"; 
+            document.getElementById("region").value = d.region || "Not Found"; 
             
             if (d.district === "Not Found" || d.district === "") {
                 pInput.setCustomValidity("Yeh Pincode record mein nahi hai. Kripya sahi Pincode add karein.");
@@ -140,19 +376,17 @@
             } else {
                 pInput.setCustomValidity("");
             }
+        }).catch(err => {
+            document.getElementById("district").value = "Error"; 
         }); 
     }
     
-    // NAYA: Global lock flag taaki kisi bhi haal me double submission na ho
     let isSubmitting = false;
 
     function submitForm(e) { 
         e.preventDefault(); 
-        
-        // 1. Agar pehle se submit ho raha hai, to agla click block kardo
         if (isSubmitting) return false;
         
-        // --- STRICT VALIDATION CHECKS ---
         let chainVal = document.getElementById("chainType").value;
         let nameVal = document.getElementById("userName").value.trim();
         let contactVal = document.getElementById("contactNumber").value.trim();
@@ -160,44 +394,34 @@
         let distVal = document.getElementById("district").value.trim();
         let risalaVal = document.getElementById("risalaReport").value.trim();
         
-        // 2. Strict English Language Check (Urdu/Hindi/Numbers ko block karne ke liye)
         let englishOnlyRegex = /^[A-Za-z\s]+$/;
         if (!englishOnlyRegex.test(nameVal)) {
             alert("Kripya apna Name strictly English alphabets (A-Z) mein hi likhein. Urdu ya Hindi allow nahi hai.");
             return false;
         }
         
-        // 3. Conditional Fields (Nigran Level ya Department Level) ka Strict Check
         if (chainVal === "central") {
             let nigranVal = document.getElementById("nigranLevel").value;
             if (!nigranVal || nigranVal === "Select Nigran Level") {
-                alert("Kripya Nigran Level select karein.");
-                return false;
+                alert("Kripya Nigran Level select karein."); return false;
             }
         } else if (chainVal === "department") {
             let zimmedarVal = document.getElementById("zimmedarLevel").value;
             let deptVal = document.getElementById("departmentList").value;
             if (!zimmedarVal || zimmedarVal === "Select Zimmedar Level") {
-                alert("Kripya Zimmedar Level select karein.");
-                return false;
+                alert("Kripya Zimmedar Level select karein."); return false;
             }
             if (!deptVal || deptVal === "Select Department") {
-                alert("Kripya Department select karein.");
-                return false;
+                alert("Kripya Department select karein."); return false;
             }
         } else {
-            alert("Kripya Chain select karein.");
-            return false;
+            alert("Kripya Chain select karein."); return false;
         }
 
-        // 4. Pincode Not Found Check
-        if (distVal === "" || distVal === "Not Found") {
-            alert("Kripya sahi Pincode darj karein jo record mein maujood ho.");
-            return false;
+        if (distVal === "" || distVal === "Not Found" || distVal === "Error") {
+            alert("Kripya sahi Pincode darj karein jo record mein maujood ho."); return false;
         }
-        // --- VALIDATION KHATAM ---
 
-        // Sab sahi hone par Submission Lock on karna
         isSubmitting = true;
         let btn = document.getElementById("submitBtn");
         btn.disabled = true;
@@ -206,11 +430,536 @@
         fetch(scriptURL, { 
             method: "POST", 
             body: JSON.stringify({ chainType: chainVal, userName: nameVal, contactNumber: contactVal, nigranLevel: document.getElementById("nigranLevel").value, zimmedarLevel: document.getElementById("zimmedarLevel").value, departmentList: document.getElementById("departmentList").value, risalaReport: risalaVal, pincode: pinVal, district: distVal, division: document.getElementById("division").value, state: document.getElementById("state").value, region: document.getElementById("region").value }) 
-        }).then(r => r.json()).then(d => { 
+        })
+        .then(r => r.json())
+        .then(d => { 
             document.getElementById("dataForm").classList.add("hidden"); 
+            document.getElementById("dynamicHeading").classList.add("hidden"); 
+            document.getElementById("dynamicSubheading").classList.add("hidden"); 
             document.getElementById("successMessage").classList.remove("hidden"); 
+        })
+        .catch(err => {
+            alert("Form submit karne me error aayi hai. Please dobara try karein.");
+            isSubmitting = false;
+            btn.disabled = false;
+            btn.innerText = "Submit Report";
         }); 
     }
+
+    let officeUser = {};
+    let officeRows = [];
+    let currentFilteredRows = [];
+    let currentPage = 1;
+
+    function openOfficeLogin() {
+        document.getElementById('loginOverlay').classList.remove('hidden');
+        document.getElementById('officeUserId').focus();
+    }
+    function closeOfficeLogin() {
+        document.getElementById('loginOverlay').classList.add('hidden');
+        document.getElementById('loginError').style.display = 'none';
+    }
+    function officeLogin(e) {
+        e.preventDefault();
+        const btn = document.getElementById('officeLoginBtn');
+        const err = document.getElementById('loginError');
+        const userId = document.getElementById('officeUserId').value.trim();
+        const password = document.getElementById('officePassword').value;
+        btn.disabled = true; btn.textContent = 'Checking...'; err.style.display = 'none';
+        
+        fetch(scriptURL + '?action=login&userId=' + encodeURIComponent(userId) + '&password=' + encodeURIComponent(password))
+          .then(r => r.json())
+          .then(d => {
+              if (d.status === 'Success') {
+                  officeUser = d.user || {};
+                  sessionStorage.setItem('risalaToken', d.token);
+                  sessionStorage.setItem('risalaUser', JSON.stringify(officeUser));
+                  closeOfficeLogin();
+                  showEmployeeDashboard();
+              } else {
+                  err.textContent = d.message || 'Invalid User ID ya Password.';
+                  if (d.isOffMsg) {
+                      err.style.backgroundColor = "#dc3545";
+                      err.style.color = "white";
+                  } else {
+                      err.style.backgroundColor = "#fde8e8";
+                      err.style.color = "#b42318";
+                  }
+                  err.style.display = 'block';
+              }
+          })
+          .catch(() => { err.textContent = 'Login server se connection nahi ho raha. Ensure CORS/App Script is allowed.'; err.style.display='block'; })
+          .finally(() => { btn.disabled=false; btn.textContent='Login'; });
+    }
+    
+    function showEmployeeDashboard() {
+        try { officeUser = JSON.parse(sessionStorage.getItem('risalaUser') || '{}'); } catch(e) { officeUser = {}; }
+        const token = sessionStorage.getItem('risalaToken');
+        if (!token) { openOfficeLogin(); return; }
+        
+        document.getElementById('mainWrapper').parentElement.style.display = 'none';
+        document.getElementById('employeeView').style.display = 'block';
+        
+        document.getElementById('who').textContent = 'User : ' + (officeUser.name || officeUser.userId || 'Employee');
+        document.getElementById('scope').textContent = 'Access: ' + [officeUser.country, officeUser.region, officeUser.state, officeUser.division, officeUser.district, officeUser.chain, officeUser.department].filter(Boolean).join(' / ');
+        loadDashboard(token);
+    }
+    
+    function officeLogout() {
+        sessionStorage.removeItem('risalaToken');
+        sessionStorage.removeItem('risalaUser');
+        officeRows = []; officeUser = {}; currentFilteredRows = [];
+        
+        document.getElementById('employeeView').style.display = 'none';
+        document.getElementById('mainWrapper').parentElement.style.display = 'block';
+        
+        window.scrollTo(0,0);
+    }
+    
+    let chartRefs = {};
+    function loadDashboard(token) {
+        document.getElementById('dashMessage').style.display='block';
+        document.getElementById('dashMessage').textContent='Loading reports...';
+        document.getElementById('dashTable').style.display='none';
+        fetch(scriptURL + '?action=dashboard&token=' + encodeURIComponent(token) + '&_=' + Date.now(), {cache:'no-store'})
+          .then(r => r.json())
+          .then(d => {
+              if (d.status !== 'Success') {
+                  const msg = d.message || 'Dashboard load nahi ho saka.';
+                  const isSession = /session|login required|invalid/i.test(msg);
+                  if (isSession) {
+                      sessionStorage.removeItem('risalaToken');
+                      sessionStorage.removeItem('risalaUser');
+                      document.getElementById('employeeView').style.display='none';
+                      document.getElementById('mainWrapper').parentElement.style.display='block';
+                      alert(msg + ' Dobara login karein.');
+                      openOfficeLogin();
+                  } else {
+                      document.getElementById('dashMessage').style.display='block';
+                      document.getElementById('dashMessage').textContent=msg;
+                  }
+                  return;
+              }
+              
+              if(d.b4Value) {
+                  document.getElementById('dashSubTitle').innerText = d.b4Value;
+                  document.getElementById('dashSubTitle').style.display = 'block';
+              } else {
+                  document.getElementById('dashSubTitle').style.display = 'none';
+              }
+              
+              if(d.b6Value) {
+                  let b6El = document.getElementById('b6Box');
+                  b6El.innerText = d.b6Value;
+                  b6El.style.display = 'flex';
+                  b6El.style.padding = '4px 12px';
+                  b6El.style.fontSize = '13px';
+                  b6El.style.borderRadius = '6px';
+              } else {
+                  document.getElementById('b6Box').style.display = 'none';
+              }
+
+              officeRows = Array.isArray(d.rows) ? d.rows : [];
+              window.dashboardSourceRows = Number(d.totalRows || 0);
+              populateDashboardFilters(true);
+              renderDashboard();
+          })
+          .catch(err => {
+              console.error(err);
+              document.getElementById('dashMessage').textContent='Dashboard data load nahi ho saka. Google Apps Script deployment check karein.';
+          });
+    }
+    
+    function refreshDashboard() {
+        const token = sessionStorage.getItem('risalaToken');
+        if (token) loadDashboard(token);
+    }
+    function uniqValues(rows, key) {
+        return [...new Set(rows.map(x => String(x[key] || '').trim()).filter(Boolean))].sort((a,b)=>a.localeCompare(b));
+    }
+    function fillDash(id, arr, firstText, keepValue) {
+        const s=document.getElementById(id);
+        const current = keepValue !== undefined ? keepValue : s.value;
+        s.innerHTML='<option value="">'+firstText+'</option>'+arr.map(x=>'<option value="'+escapeHtml(x)+'">'+escapeHtml(x)+'</option>').join('');
+        if(arr.some(x => sameClient(x,current))) s.value=current;
+        else s.value='';
+    }
+    function rowsForHierarchy(region, state, division) {
+        return officeRows.filter(x =>
+            (!region || sameClient(x.region, region)) &&
+            (!state || sameClient(x.state, state)) &&
+            (!division || sameClient(x.division, division))
+        );
+    }
+    
+    function populateDashboardFilters(resetAll) {
+        const region = resetAll ? '' : (document.getElementById('dashRegion').value || '');
+        const state = resetAll ? '' : (document.getElementById('dashState').value || '');
+        const division = resetAll ? '' : (document.getElementById('dashDivision').value || '');
+        const district = resetAll ? '' : (document.getElementById('dashDistrict').value || '');
+        const dept = resetAll ? '' : (document.getElementById('dashDepartment').value || '');
+        const chain = resetAll ? '' : (document.getElementById('dashChain').value || '');
+
+        fillDash('dashRegion', uniqValues(officeRows,'region'), 'Region', region);
+        const regionRows = rowsForHierarchy(region, '', '');
+        fillDash('dashState', uniqValues(regionRows,'state'), 'State', state);
+        const stateRows = rowsForHierarchy(region, state, '');
+        fillDash('dashDivision', uniqValues(stateRows,'division'), 'Division', division);
+        const divisionRows = rowsForHierarchy(region, state, division);
+        fillDash('dashDistrict', uniqValues(divisionRows,'district'), 'District', district);
+        fillDash('dashDepartment', uniqValues(officeRows,'department'), 'Department', dept);
+        fillDash('dashChain', uniqValues(officeRows,'chain'), 'Chain', chain);
+    }
+    function onRegionChange() {
+        const region = document.getElementById('dashRegion').value;
+        fillDash('dashState', uniqValues(rowsForHierarchy(region,'',''),'state'), 'State', '');
+        fillDash('dashDivision', uniqValues(rowsForHierarchy(region,'',''),'division'), 'Division', '');
+        fillDash('dashDistrict', uniqValues(rowsForHierarchy(region,'',''),'district'), 'District', '');
+        renderDashboard();
+    }
+    function onStateChange() {
+        const region = document.getElementById('dashRegion').value;
+        const state = document.getElementById('dashState').value;
+        fillDash('dashDivision', uniqValues(rowsForHierarchy(region,state,''),'division'), 'Division', '');
+        fillDash('dashDistrict', uniqValues(rowsForHierarchy(region,state,''),'district'), 'District', '');
+        renderDashboard();
+    }
+    function onDivisionChange() {
+        const region = document.getElementById('dashRegion').value;
+        const state = document.getElementById('dashState').value;
+        const division = document.getElementById('dashDivision').value;
+        fillDash('dashDistrict', uniqValues(rowsForHierarchy(region,state,division),'district'), 'District', '');
+        renderDashboard();
+    }
+    function onDistrictChange() { renderDashboard(); }
+    function onDepartmentChange() { renderDashboard(); }
+    function onChainChange() { renderDashboard(); }
+    
+    function escapeHtml(x) { return String(x == null ? '' : x).replace(/[&<>"']/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m])); }
+    
+    function groupCount(rows,key) {
+        const map={};
+        rows.forEach(x=>{
+            const k=String(x[key]||'').trim()||'Unknown';
+            const n=Number(String(x.report||'').replace(/,/g,''));
+            map[k]=(map[k]||0)+(isNaN(n)?0:n);
+        });
+        return Object.keys(map).sort((a,b)=>map[b]-map[a]).map(k=>({label:k,count:map[k]}));
+    }
+    function destroyChart(name){ if(chartRefs[name]) { chartRefs[name].destroy(); chartRefs[name]=null; } }
+    
+    function buildChartHTML(id, title) {
+        return `<div class="chart-card"><div class="chart-title">${title}</div><div class="chart-wrap"><canvas id="${id}"></canvas></div></div>`;
+    }
+
+    function buildTableHTML(title, data) {
+        let html = `<div class="chart-card"><div class="chart-title">${title}</div>`;
+        html += `<div style="flex: 1; overflow-y:auto; border: 1px solid #e2e8f0; border-radius: 6px; min-height: 0; min-width: 0; box-shadow: inset 0 0 5px rgba(0,0,0,0.01);">`;
+        html += `<table style="width:100%; margin:0; border-collapse: collapse; text-align: left;">`;
+        html += `<thead><tr>
+            <th style="font-family: Arial, sans-serif; font-weight: bold; position:sticky; top:0; z-index:2; background:var(--dash-primary); color:white; padding: 10px 12px; text-transform: uppercase; font-size: 11px; letter-spacing: 0.5px;">Name</th>
+            <th style="font-family: Arial, sans-serif; font-weight: bold; position:sticky; top:0; z-index:2; background:var(--dash-primary); color:white; padding: 10px 12px; text-align: right; text-transform: uppercase; font-size: 11px; letter-spacing: 0.5px;">Report Qty</th>
+            </tr></thead><tbody>`;
+        
+        if(data.length === 0) {
+            html += `<tr><td colspan="2" style="text-align:center; padding: 12px; color: #777; font-size: 13px;">No data available</td></tr>`;
+        } else {
+            data.forEach((d, index) => {
+                let bg = index % 2 === 0 ? '#ffffff' : '#f9fafb';
+                html += `<tr style="background-color: ${bg}; border-bottom: 1px solid #edf2f7;">`;
+                html += `<td style="padding: 10px 12px; color: #334155; font-size: 13px;">${escapeHtml(d.label)}</td>`;
+                html += `<td style="font-family: Arial, sans-serif; font-weight:bold; padding: 10px 12px; text-align:right; color: var(--dash-primary); font-size: 14px;">${d.count.toLocaleString('en-IN')}</td>`;
+                html += `</tr>`;
+            });
+        }
+        html += `</tbody></table></div></div>`;
+        return html;
+    }
+
+    function drawBarChart(canvasId, refName, title, rows, key) {
+        if(typeof Chart === 'undefined') return;
+        destroyChart(refName);
+        const grouped = groupCount(rows,key);
+        const canvas = document.getElementById(canvasId);
+        if(!canvas) return;
+        
+        const bgColors = grouped.map((x, i) => colorPalette[i % colorPalette.length]);
+
+        chartRefs[refName] = new Chart(canvas.getContext('2d'), {
+            type: 'bar',
+            plugins: [ChartDataLabels],
+            data: {
+                labels: grouped.map(x=>x.label),
+                datasets: [{
+                    label: 'Report Quantity',
+                    data: grouped.map(x=>x.count),
+                    borderWidth: 0,
+                    borderRadius: 4, 
+                    backgroundColor: bgColors,
+                    hoverBackgroundColor: bgColors
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                layout: { padding: { top: 25 } }, 
+                plugins: {
+                    legend: { display: false },
+                    title: { display: false, text: title },
+                    datalabels: {
+                        anchor: 'end',
+                        align: 'top',
+                        color: '#444',
+                        font: { family: 'Arial', weight: 'bold', size: 11 },
+                        formatter: function(value) { return value.toLocaleString('en-IN'); }
+                    },
+                    tooltip: { 
+                        enabled: true,
+                        backgroundColor: 'rgba(15, 23, 42, 0.9)',
+                        padding: 12,
+                        cornerRadius: 8,
+                        titleFont: { family: 'Arial', size: 13 },
+                        bodyFont: { family: 'Arial', size: 14, weight: 'bold' }
+                    }
+                },
+                scales: {
+                    x: { 
+                        ticks: { color: '#64748b', font: { family: 'Arial', size: 11 } },
+                        grid: { display: false }
+                    },
+                    y: { 
+                        beginAtZero: true, 
+                        ticks: { precision: 0, color: '#64748b', font: { family: 'Arial', size: 11 } },
+                        border: { dash: [4, 4] }, 
+                        grid: { color: '#f1f5f9' }
+                    }
+                }
+            }
+        });
+    }
+
+    function getHierarchyLevel() {
+        if (document.getElementById('dashDistrict').value) return 'district';
+        if (document.getElementById('dashDivision').value) return 'division';
+        if (document.getElementById('dashState').value) return 'state';
+        if (document.getElementById('dashRegion').value) return 'region';
+        
+        if (officeUser.district && officeUser.district.toLowerCase() !== 'all') return 'district';
+        if (officeUser.division && officeUser.division.toLowerCase() !== 'all') return 'division';
+        if (officeUser.state && officeUser.state.toLowerCase() !== 'all') return 'state';
+        if (officeUser.region && officeUser.region.toLowerCase() !== 'all') return 'region';
+        return 'india';
+    }
+
+    function renderDynamicCharts(rows) {
+        const level = getHierarchyLevel();
+        const grid = document.getElementById('chartGrid');
+        let html = '';
+        let chartsToDraw = [];
+
+        if (level === 'india') {
+            html += buildChartHTML('regionChart', 'REPORTS BY REGION');
+            html += buildTableHTML('REPORTS BY STATE', groupCount(rows, 'state'));
+            html += buildTableHTML('REPORTS BY DEPARTMENT', groupCount(rows, 'department'));
+            html += buildTableHTML('REPORTS BY DIVISION', groupCount(rows, 'division'));
+            chartsToDraw = [ {id: 'regionChart', key: 'region'} ];
+        } 
+        else if (level === 'region') {
+            html += buildChartHTML('stateChart', 'REPORTS BY STATE');
+            html += buildTableHTML('REPORTS BY DIVISION', groupCount(rows, 'division'));
+            html += buildTableHTML('REPORTS BY DEPARTMENT', groupCount(rows, 'department'));
+            html += buildTableHTML('REPORTS BY DISTRICT', groupCount(rows, 'district'));
+            chartsToDraw = [ {id: 'stateChart', key: 'state'} ];
+        } 
+        else { 
+            html += buildChartHTML('divisionChart', 'REPORTS BY DIVISION');
+            html += buildTableHTML('REPORTS BY DISTRICT', groupCount(rows, 'district'));
+            html += buildTableHTML('REPORTS BY DEPARTMENT', groupCount(rows, 'department'));
+            html += `<div style="display:none;"></div>`; 
+            chartsToDraw = [ {id: 'divisionChart', key: 'division'} ];
+        }
+
+        grid.innerHTML = html;
+        chartsToDraw.forEach(c => drawBarChart(c.id, c.id, c.title, rows, c.key));
+    }
+    
+    function renderTablePage(page) {
+        currentPage = page;
+        const rowsPerPage = 10;
+        const start = (currentPage - 1) * rowsPerPage;
+        const end = start + rowsPerPage;
+        const pagedRows = currentFilteredRows.slice(start, end);
+
+        document.getElementById('dashBody').innerHTML=pagedRows.map(x=>'<tr><td>'+escapeHtml(x.date)+'</td><td>'+escapeHtml(x.name)+'</td><td>'+escapeHtml(x.contact)+'</td><td>'+escapeHtml(x.chain)+'</td><td>'+escapeHtml(x.level)+'</td><td>'+escapeHtml(x.department)+'</td><td>'+escapeHtml(x.report)+'</td><td>'+escapeHtml(x.district)+'</td><td>'+escapeHtml(x.division)+'</td><td>'+escapeHtml(x.state)+'</td><td>'+escapeHtml(x.region)+'</td></tr>').join('');
+
+        renderPagination();
+    }
+
+    function renderPagination() {
+        const rowsPerPage = 10;
+        const totalPages = Math.ceil(currentFilteredRows.length / rowsPerPage);
+        let html = '';
+        if (totalPages > 1) {
+            html += `<button class="page-btn" ${currentPage === 1 ? 'disabled' : ''} onclick="renderTablePage(${Math.max(1, currentPage - 1)})">Prev</button>`;
+            
+            let startPage = Math.max(1, currentPage - 2);
+            let endPage = Math.min(totalPages, currentPage + 2);
+            
+            if (endPage - startPage < 4) {
+                if (startPage === 1) endPage = Math.min(totalPages, startPage + 4);
+                else if (endPage === totalPages) startPage = Math.max(1, endPage - 4);
+            }
+
+            for (let i = startPage; i <= endPage; i++) {
+                html += `<button class="page-btn ${i === currentPage ? 'active' : ''}" onclick="renderTablePage(${i})">${i}</button>`;
+            }
+            
+            html += `<button class="page-btn" ${currentPage === totalPages ? 'disabled' : ''} onclick="renderTablePage(${Math.min(totalPages, currentPage + 1)})">Next</button>`;
+        }
+        document.getElementById('paginationControls').innerHTML = html;
+    }
+    
+    function renderDashboard() {
+        const q=document.getElementById('search').value.toLowerCase().trim();
+        const rg=document.getElementById('dashRegion').value;
+        const st=document.getElementById('dashState').value;
+        const dv=document.getElementById('dashDivision').value;
+        const di=document.getElementById('dashDistrict').value;
+        const dp=document.getElementById('dashDepartment').value;
+        const ch=document.getElementById('dashChain').value;
+        
+        currentFilteredRows=officeRows.filter(x =>
+            (!rg||sameClient(x.region,rg)) &&
+            (!st||sameClient(x.state,st)) &&
+            (!dv||sameClient(x.division,dv)) &&
+            (!di||sameClient(x.district,di)) &&
+            (!dp||sameClient(x.department,dp)) &&
+            (!ch||sameClient(x.chain,ch)) &&
+            (!q||JSON.stringify(x).toLowerCase().includes(q))
+        );
+        currentPage = 1;
+        
+        const reportSum=currentFilteredRows.reduce((sum,x)=>{const n=Number(String(x.report||'').replace(/,/g,''));return sum+(isNaN(n)?0:n);},0);
+        
+        const icons = [
+            `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#f0a014" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>`,
+            `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#3CAEA3" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21.21 15.89A10 10 0 1 1 8 2.83"></path><path d="M22 12A10 10 0 0 0 12 2v10z"></path></svg>`
+        ];
+
+        const statsData = [
+            { label: 'TOTAL SUBMITTED', count: currentFilteredRows.length.toLocaleString('en-IN'), iconIndex: 0 },
+            { label: 'REPORT', count: reportSum.toLocaleString('en-IN'), iconIndex: 1 }
+        ];
+
+        document.getElementById('stats').innerHTML = statsData.map(d => `
+            <div class="stat">
+                <div style="display:flex; align-items:center; gap:8px;">
+                    ${icons[d.iconIndex]}
+                    <div style="font-size:12px; color:#222; font-weight:700;">${d.label}</div>
+                </div>
+                <div style="font-family: Arial, sans-serif; font-size:26px; font-weight:bold; color:var(--dash-primary); line-height: 1;">${d.count}</div>
+            </div>
+        `).join('');
+        
+        if(currentFilteredRows.length){
+            document.getElementById('dashTable').style.display='table';
+            document.getElementById('dashMessage').style.display='none';
+            renderTablePage(1);
+        } else {
+            document.getElementById('dashTable').style.display='none';
+            document.getElementById('dashMessage').style.display='block';
+            document.getElementById('dashMessage').textContent=officeRows.length ? 'Reports available hain, lekin current filter/search se koi match nahi mila.' : 'Responses sheet se koi report read nahi hui.';
+            document.getElementById('dashBody').innerHTML='';
+            document.getElementById('paginationControls').innerHTML='';
+        }
+        
+        document.getElementById('dashInfo').textContent='Responses rows: '+(window.dashboardSourceRows||0)+' • Visible rows: '+currentFilteredRows.length+' • Report quantity: '+reportSum.toLocaleString('en-IN');
+        
+        renderDynamicCharts(currentFilteredRows);
+    }
+
+    function getFilteredDashboardRows() {
+        const q=document.getElementById('search').value.toLowerCase().trim();
+        const rg=document.getElementById('dashRegion').value;
+        const st=document.getElementById('dashState').value;
+        const dv=document.getElementById('dashDivision').value;
+        const di=document.getElementById('dashDistrict').value;
+        const dp=document.getElementById('dashDepartment').value;
+        const ch=document.getElementById('dashChain').value;
+        return officeRows.filter(x =>
+            (!rg||sameClient(x.region,rg)) &&
+            (!st||sameClient(x.state,st)) &&
+            (!dv||sameClient(x.division,dv)) &&
+            (!di||sameClient(x.district,di)) &&
+            (!dp||sameClient(x.department,dp)) &&
+            (!ch||sameClient(x.chain,ch)) &&
+            (!q||JSON.stringify(x).toLowerCase().includes(q))
+        );
+    }
+
+    function downloadExcel() {
+        const rows = getFilteredDashboardRows();
+        if (!rows.length) {
+            alert('Download karne ke liye koi report available nahi hai. Pehle filter/search check karein.');
+            return;
+        }
+        if (typeof XLSX === 'undefined') {
+            alert('Excel download library load nahi hui. Internet connection check karke page refresh karein.');
+            return;
+        }
+
+        const exportRows = rows.map(x => ({
+            'Date/Time': x.date || '',
+            'Name': x.name || '',
+            'Contact Number': x.contact || '',
+            'Chain Type': x.chain || '',
+            'Nigran Level': x.nigran || '',
+            'Zimmedar Level': x.zimmedar || '',
+            'Department': x.department || '',
+            'Risala Report': x.report || '',
+            'Pincode': x.pincode || '',
+            'District Name': x.district || '',
+            'Division Name': x.division || '',
+            'State Name': x.state || '',
+            'Region Name': x.region || '',
+            'Country': x.country || ''
+        }));
+
+        const ws = XLSX.utils.json_to_sheet(exportRows);
+        ws['!cols'] = [
+            {wch:20},{wch:24},{wch:16},{wch:14},{wch:22},{wch:22},{wch:34},
+            {wch:14},{wch:12},{wch:24},{wch:24},{wch:24},{wch:24},{wch:14}
+        ];
+        const wb = XLSX.utils.book_new();
+        XLSX.utils.book_append_sheet(wb, ws, 'Reports');
+
+        const summary = [
+            ['Weekly Risala Report - Dashboard Export'],
+            ['Downloaded Rows', rows.length],
+            ['Report Quantity', rows.reduce((sum,x)=>{const n=Number(String(x.report||'').replace(/,/g,''));return sum+(isNaN(n)?0:n);},0)],
+            ['Region Filter', document.getElementById('dashRegion').value || 'Region'],
+            ['State Filter', document.getElementById('dashState').value || 'State'],
+            ['Division Filter', document.getElementById('dashDivision').value || 'Division'],
+            ['District Filter', document.getElementById('dashDistrict').value || 'District'],
+            ['Chain Filter', document.getElementById('dashChain').value || 'Chain'],
+            ['Search', document.getElementById('search').value || '']
+        ];
+        const sws = XLSX.utils.aoa_to_sheet(summary);
+        sws['!cols'] = [{wch:24},{wch:40}];
+        XLSX.utils.book_append_sheet(wb, sws, 'Summary');
+
+        const stamp = new Date().toISOString().slice(0,19).replace(/[T:]/g,'-');
+        XLSX.writeFile(wb, 'Weekly_Risala_Report_' + stamp + '.xlsx');
+    }
+
+    function sameClient(a,b){return String(a||'').trim().toLowerCase()===String(b||'').trim().toLowerCase();}
+
+    document.addEventListener('DOMContentLoaded', function(){
+        if (sessionStorage.getItem('risalaToken')) {
+            try { officeUser=JSON.parse(sessionStorage.getItem('risalaUser')||'{}'); } catch(e) { officeUser={}; }
+            showEmployeeDashboard();
+        }
+    });
 </script>
 </body>
 </html>
